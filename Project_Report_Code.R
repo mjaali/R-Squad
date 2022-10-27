@@ -1,31 +1,33 @@
 
 
+
+#'[ Kindly refer to the sections ( Ctrl + Shift + O) to quickly browse the code
+
+# ----------------------- [ 0 - 0 ] Packages and Libraries  -------------------- ####
+
 #'[ Installing all necessary packages into R
-
-install.packages("tidyverse",  repos = "http://cran.us.r-project.org")
+#'
+# i will install pacman, then use p_load() to quickly install&load all my necessary packages
 install.packages("pacman",     repos = "http://cran.us.r-project.org")
-install.packages("writexl",    repos = "http://cran.us.r-project.org")
-install.packages("readxl",     repos = "http://cran.us.r-project.org")
-install.packages("psych",      repos = "http://cran.us.r-project.org")
-install.packages("scales",     repos = "http://cran.us.r-project.org")
-
-
 
 
 
 #'[ loading the above packages into R (run one line to load all)
 
-library(tidyverse); library(pacman); library(writexl); library(readxl); library(scales); library(readr); library(psych); library(dplyr)
+pacman::p_load(
+  tidyverse, # mostly for dplyr and other necessary packages
+  writexl,   # i prefer writexl because i can import as sheets
+  readxl,    # i prefer readxl because i can extract sheets
+  scales,    # to format certain variables to percent.. etc
+  psych,     # used for multiple linear regression
+)
 
-library(tidyverse)    # mostly for dplyr and other necessary packages
-library(pacman)       # for package installation
-library(writexl)      # i prefer writexl because i can import as sheets
-library(readxl)       # i prefer readxl because i can extract sheets
-library(scales)       # to format certain variables to tables
-library(psych)        # used for multiple linear regression
 
 
-# ----------------- 
+# note : a lot of data wrangling functions used are among the packages included in tidyverse
+
+# ----------------------- [ 1 - 0 ] assigning the data frame  ------------------ ####
+
 
 # loading in the file
 AbsEmployees <- read_excel("../MIS341-02_Group 4/1. input/AbsEmployees.xlsx", sheet = 1)
@@ -34,19 +36,32 @@ AbsEmployees <- read_excel("../MIS341-02_Group 4/1. input/AbsEmployees.xlsx", sh
 #duplicating the data set to re-code if necessary
 emp <- AbsEmployees
 
-# converting tenure from years to hours
-emp$length_hours <- emp$LengthService * 8760; view(emp)
 
 
-# creating a data frame to calculate frequency of Jobs
-Freq_jobTitle          <- data.frame(table(emp$JobTitle)); view(Freq_jobTitle)
-Freq_jobTitle          <- rename(Freq_jobTitle, jobTitle = Var1 ); view(Freq_jobTitle)
-Freq_jobTitle$Average  <-  (Freq_jobTitle$Freq /  sum(Freq_jobTitle$Freq)); view(Freq_jobTitle)
-Freq_jobTitle$Average  <- label_percent()(Freq_jobTitle$Averages)
+# ----------------------- [ 1 - 1 ] data cleaning  ----------------------------- ####
+
+
+
+# ----------------------- [ 1 - 1 ] data wrangling  ---------------------------- ####
+
+
+
+#'[ creating a data frame to calculate frequency of Jobs
+
+Freq_jobTitle          <- data.frame(table(emp$JobTitle))
+Freq_jobTitle          <- rename(Freq_jobTitle, jobTitle = Var1 )
+Freq_jobTitle$Average  <-  (Freq_jobTitle$Freq /  sum(Freq_jobTitle$Freq))
+Freq_jobTitle$Average  <- round(Freq_jobTitle$Average, digits = 3)
+Freq_jobTitle$Average  <- label_percent()(Freq_jobTitle$Average)
 View(Freq_jobTitle)
 
 
-Freq_division <- data.frame(table(emp$Division)); View(Freq_division)
+
+emp$new <- case_when(emp$Age > 17 & emp$Age <= 25 ~ "young",
+                   emp$Age > 25 & emp$Age <= 35 ~ "mid life crisis",
+                   emp$Age > 35 & emp$Age <= 50 ~ "old",
+                   emp$Age > 50 ~ "about to die")
+View(emp )
 
 summarise(emp)
 
@@ -61,8 +76,6 @@ table(emp$JobTitle, emp$Division)
 
 
 #'[ predictive analytics
-colnames(emp)
-Model_1 <- lm(emp$AbsentHours ~ Gender + JobTitle + DepartmentName + StoreLocation  + Division + Age + LengthService + BusinessUnit, data = emp); summary(Model_1)
 
 
 
