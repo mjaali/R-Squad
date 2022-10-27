@@ -113,7 +113,7 @@ We have a set of data features obtained from HR records about employees containi
 | LengthService | 
 | AbsentHours | 
 | BusinessUnit | 
-| AbsentHoursPerTenure | <<Added>>
+| AbsentHoursPerTenure | :eight_pointed_black_star::new:	
 
 ## 2-   Problem Decomposition
 
