@@ -7,7 +7,7 @@ output:
     toc: true
     theme: readable
 ---
-<img src="https://mjaali.github.io/R-Squad/Assets/Brand/Rsquad%20Project%20Report%20Header.png/>
+<img src="https://mjaali.github.io/R-Squad/Assets/Brand/Rsquad%20Project%20Report%20Header.png"/>
 # Cover page
 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
