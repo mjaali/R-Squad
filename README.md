@@ -1,7 +1,7 @@
 ---
 title: "MIS-341 Employee Absenteesim Course Project"
-author: "Group4_Section2"
-date: "`r Sys.Date()`"
+author: "Group 4 - Section 2"
+date: "Oct 25, 2022"
 output: 
   html_document:
     toc: true
@@ -14,6 +14,30 @@ there will be a lot of text written here and a lot of description of the text th
 under each one of these parts and sections, there will be text to describe them properly and so on and what not
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what not
+
+
+-----
+
+# TOC
+- [Cover page](#cover-page)
+- [TOC](#toc)
+- [Execututive Summary](#execututive-summary)
+- [Introduction](#introduction)
+  * [1-    Problem Problem](#1-----problem-problem)
+  * [2-   Problem Decomposition](#2----problem-decomposition)
+  * [3-   Data Prepossessing](#3----data-prepossessing)
+    + [3-i       Data Exploration](#3-i-------data-exploration)
+    + [3-ii       Data cleaning](#3-ii-------data-cleaning)
+    + [3-iii       Data wrangling](#3-iii-------data-wrangling)
+    + [3-iv       Data Classifications and finalization](#3-iv-------data-classifications-and-finalization)
+- [Analysis](#analysis)
+  * [1-   What is happening?](#1----what-is-happening-)
+    + [1-i   locational analysis... ????](#1-i---locational-analysis-----)
+  * [2-   What is going to happen?](#2----what-is-going-to-happen-)
+    + [2-i   locational analysis... ????](#2-i---locational-analysis-----)
+- [Recommendation](#recommendation)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 
 -----
