@@ -19,25 +19,25 @@ under each one of these parts and sections, there will be text to describe them 
 -----
 
 # TOC
+
 - [Cover page](#cover-page)
 - [TOC](#toc)
 - [Execututive Summary](#execututive-summary)
 - [Introduction](#introduction)
-  * [1-    Problem Problem](#1-----problem-problem)
+  * [1-    Problem Definition](#1-----problem-definition)
   * [2-   Problem Decomposition](#2----problem-decomposition)
   * [3-   Data Prepossessing](#3----data-prepossessing)
     + [3-i       Data Exploration](#3-i-------data-exploration)
-    + [3-ii       Data cleaning](#3-ii-------data-cleaning)
-    + [3-iii       Data wrangling](#3-iii-------data-wrangling)
-    + [3-iv       Data Classifications and finalization](#3-iv-------data-classifications-and-finalization)
+    + [3-ii       Data Cleaning](#3-ii-------data-cleaning)
+    + [3-iii       Data Wrangling](#3-iii-------data-wrangling)
+    + [3-iv       Data Classifications and Finalization](#3-iv-------data-classifications-and-finalization)
 - [Analysis](#analysis)
   * [1-   What is happening?](#1----what-is-happening-)
-    + [1-i   locational analysis... ????](#1-i---locational-analysis-----)
+    + [1-i   Locational Analysis... ????](#1-i---locational-analysis-----)
   * [2-   What is going to happen?](#2----what-is-going-to-happen-)
     + [2-i   locational analysis... ????](#2-i---locational-analysis-----)
-- [Recommendation](#recommendation)
+- [Recommendations](#recommendations)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 
 -----
@@ -92,7 +92,7 @@ under each one of these parts and sections, there will be text to describe them 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what not
 
-## 1-    Problem Problem
+## 1-    Problem Definition
 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what not
@@ -112,18 +112,18 @@ under each one of these parts and sections, there will be text to describe them 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what not
 
-### 3-ii       Data cleaning
+### 3-ii       Data Cleaning
 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what not
 
-### 3-iii       Data wrangling
+### 3-iii       Data Wrangling
 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what not
 
 
-### 3-iv       Data Classifications and finalization
+### 3-iv       Data Classifications and Finalization
 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what not
@@ -141,7 +141,7 @@ under each one of these parts and sections, there will be text to describe them 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what not
 
-### 1-i   locational analysis... ????
+### 1-i   Locational Analysis... ????
 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what no
@@ -160,7 +160,7 @@ under each one of these parts and sections, there will be text to describe them 
 
 -----
 
-# Recommendation
+# Recommendations
 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what no
