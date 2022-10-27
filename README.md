@@ -88,16 +88,32 @@ i can write things as in subscript in r studio ~SomethingLikeThis~ , to use subs
 -----
 
 # Introduction
+This project is chartered to solve the absenteeism issue at __*Canada Stores ltd*__ using data analytics. The absenteeism issue costs the company enormous expenses, and the use of data analytics can identify the most contributing factors that lead to absenteeism and can tap into recommendations to tackle this HR challenge.
 
-there will be a lot of text written here and a lot of description of the text that is going to be written down
-under each one of these parts and sections, there will be text to describe them properly and so on and what not
-there will be a lot of text written here and a lot of description of the text that is going to be written down
-under each one of these parts and sections, there will be text to describe them properly and so on and what not
+Using the provided data, we'll define the underlying problem using root-cause analysis. Then, investigate the available data elements and features at our disposal to inspire insights. And finally, evaluate and enhance data quality.
 
 ## 1-    Problem Definition
+We have a set of data features obtained from HR records about employees containing __*8336*__ entries. 
+| Title        | MIS-341 Employee Absenteesim Course Project           |
+| :------------- |:-------------|
+| Author    | Sec. 2 - G4|
+| Date | Oct 25, 2022|
 
-there will be a lot of text written here and a lot of description of the text that is going to be written down
-under each one of these parts and sections, there will be text to describe them properly and so on and what not
+| Feature        | Type           |
+| :------------- |:-------------|
+| `EmployeeNumber` | 
+| Surname | 
+| GivenName | 
+| Gender | 
+| JobTitle | 
+| DepartmentName | 
+| StoreLocation | 
+| Division | 
+| Age | 
+| LengthService | 
+| AbsentHours | 
+| BusinessUnit | 
+| AbsentHoursPerTenure | <<Added>>
 
 ## 2-   Problem Decomposition
 
