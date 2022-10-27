@@ -1,4 +1,4 @@
----
+<!-- ---
 title: "MIS-341 Employee Absenteesim Course Project"
 author: "Group 4 - Section 2"
 date: "Oct 25, 2022"
@@ -6,9 +6,15 @@ output:
   html_document:
     toc: true
     theme: readable
----
+--- -->
+
+| Title        | MIS-341 Employee Absenteesim Course Project           |
+| :------------- |:-------------|
+| Author    | Sec. 2 - G4|
+| Date | Oct 25, 2022|
+
+# Cover Page
 <img src="https://mjaali.github.io/R-Squad/Assets/Brand/Rsquad%20Project%20Report%20Header.png"/>
-# Cover page
 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what not
@@ -60,8 +66,6 @@ i can write things as in subscript in r studio ~SomethingLikeThis~ , to use subs
 
 
 ```{r Packages}
-
-
 #'[ Installing all necessary packages into R
 
 # install.packages("tidyverse",  repos = "http://cran.us.r-project.org")
@@ -79,8 +83,6 @@ i can write things as in subscript in r studio ~SomethingLikeThis~ , to use subs
 # library(readxl)
 # library(rmarkdown)
 # library(here)
-
-
 ```
 
 -----
