@@ -98,18 +98,18 @@ We have a set of data features obtained from HR records about employees containi
 | Feature        | Type           |
 | :------------- |:-------------|
 | `EmployeeNumber` | 
-| Surname | 
-| GivenName | 
-| Gender | 
-| JobTitle | 
-| DepartmentName | 
-| StoreLocation | 
-| Division | 
-| Age | 
-| LengthService | 
-| AbsentHours | 
-| BusinessUnit | 
-| AbsentHoursPerTenure | :new:	
+| `Surname` | 
+| `GivenName` | 
+| `Gender` | 
+| `JobTitle` | 
+| `DepartmentName` | 
+| `StoreLocation` | 
+| `Division` | 
+| `Age` | 
+| `LengthService` | 
+| `AbsentHours` | 
+| `BusinessUnit` | 
+| `AbsentHoursPerTenure` | :new:	
 
 ## 2-   Problem Decomposition
 
@@ -188,8 +188,4 @@ under each one of these parts and sections, there will be text to describe them 
 
 # Recommendations
 
-there will be a lot of text written here and a lot of description of the text that is going to be written down
-under each one of these parts and sections, there will be text to describe them properly and so on and what no
-
-
-
+The Cashier has the highest Absinteesm Culture level. In the city of Vancouver, the age `24.51` y/o and beyond is where Absenteeism hours escalate with a strong correlation for both males and females at a `slope of 0.9395x`. Since our x-intercept is `24.51`, or in other words, Cashiers below the age of 24.51 have no absinteesm hours `(0 Hrs / year)`. The avg. tenure of the Cashier is `4.58 years`. A policy to hire Cashiers of a maximum of `20 y/o` will ensure most cashiers will clear out of the company before they turn 25 and reduce overall company absenteeism significantly.
