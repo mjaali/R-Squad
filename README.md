@@ -94,10 +94,6 @@ Using the provided data, we'll define the underlying problem using root-cause an
 
 ## 1-    Problem Definition
 We have a set of data features obtained from HR records about employees containing __*8336*__ entries. 
-| Title        | MIS-341 Employee Absenteesim Course Project           |
-| :------------- |:-------------|
-| Author    | Sec. 2 - G4|
-| Date | Oct 25, 2022|
 
 | Feature        | Type           |
 | :------------- |:-------------|
@@ -113,12 +109,24 @@ We have a set of data features obtained from HR records about employees containi
 | LengthService | 
 | AbsentHours | 
 | BusinessUnit | 
-| AbsentHoursPerTenure | :eight_pointed_black_star::new:	
+| AbsentHoursPerTenure | :new:	
 
 ## 2-   Problem Decomposition
 
-there will be a lot of text written here and a lot of description of the text that is going to be written down
-under each one of these parts and sections, there will be text to describe them properly and so on and what not
+Multiple angles were examined to identify the most prominent congestions of absenteeism.
+
+The below table investigates the breakdown of abisentism by division. with an added metric for `Culture of Absenteeism`.
+
+Division | # Employees | Avg tenure | Total Absenteeism | Avg. Abs. / tenure | Absenteeism Culture |
+| :------------- |:-------------|:-------------|:-------------|:-------------|:-------------|
+Stores | 8163 | 5 | 502722 | 16 | 29053 | 
+FinanceAndAccounting | 73 | 12 | 2918 | 13 | 80 | 
+HumanResources | 76 | 19 | 4137 | 5 | 20 | 
+Executive | 11 | 11 | 532 | 8 | 8 | 
+InfoTech | 10 | 12 | 401 | 4 | 3 | 
+Legal | 3 | 11 | 154 | 6 | 1 | 
+
+
 
 ## 3-   Data Prepossessing
 
