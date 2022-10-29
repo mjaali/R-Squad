@@ -8,18 +8,13 @@ output:
     theme: readable
 --- -->
 
+<img src="https://mjaali.com/R-Squad/Assets/Brand/Rsquad%20Project%20Report%20Header.png"/>
+
 | Title        | MIS-341 Employee Absenteesim Course Project           |
 | :------------- |:-------------|
 | Author    | Sec. 2 - G4|
 | Date | Oct 25, 2022|
 
-# Cover Page
-<img src="https://mjaali.com/R-Squad/Assets/Brand/Rsquad%20Project%20Report%20Header.png"/>
-
-there will be a lot of text written here and a lot of description of the text that is going to be written down
-under each one of these parts and sections, there will be text to describe them properly and so on and what not
-there will be a lot of text written here and a lot of description of the text that is going to be written down
-under each one of these parts and sections, there will be text to describe them properly and so on and what not
 
 
 -----
@@ -103,7 +98,7 @@ Rolls Royce-Quality Data
 | `Surname` | 
 | `GivenName` | 
 | `Gender` | 
-] `ProbableGenderByGivenName` | :new:	
+| `ProbableGenderByGivenName` | :new:	
 | `JobTitle` | 
 | `DepartmentName` | 
 | `StoreLocation` | 
