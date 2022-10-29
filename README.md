@@ -14,7 +14,7 @@ output:
 | Date | Oct 25, 2022|
 
 # Cover Page
-<img src="https://mjaali.github.io/R-Squad/Assets/Brand/Rsquad%20Project%20Report%20Header.png"/>
+<img src="https://mjaali.com/R-Squad/Assets/Brand/Rsquad%20Project%20Report%20Header.png"/>
 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what not
@@ -68,21 +68,21 @@ i can write things as in subscript in r studio ~SomethingLikeThis~ , to use subs
 ```{r Packages}
 #'[ Installing all necessary packages into R
 
-# install.packages("tidyverse",  repos = "http://cran.us.r-project.org")
-# install.packages("pacman",     repos = "http://cran.us.r-project.org")
-# install.packages("writexl",    repos = "http://cran.us.r-project.org")
-# install.packages("readxl",     repos = "http://cran.us.r-project.org")
-# install.packages("rmarkdown",  repos = "http://cran.us.r-project.org")       
-# install.packages("here",       repos = "http://cran.us.r-project.org")
+install.packages("tidyverse",  repos = "http://cran.us.r-project.org")
+install.packages("pacman",     repos = "http://cran.us.r-project.org")
+install.packages("writexl",    repos = "http://cran.us.r-project.org")
+install.packages("readxl",     repos = "http://cran.us.r-project.org")
+install.packages("rmarkdown",  repos = "http://cran.us.r-project.org")       
+install.packages("here",       repos = "http://cran.us.r-project.org")
 
 #'[ loading the above packages into R
 
-# library(tidyverse)
-# library(pacman)
-# library(writexl)
-# library(readxl)
-# library(rmarkdown)
-# library(here)
+library(tidyverse)
+library(pacman)
+library(writexl)
+library(readxl)
+library(rmarkdown)
+library(here)
 ```
 
 -----
@@ -96,7 +96,7 @@ Using the provided data, we'll define the underlying problem using root-cause an
 We have a set of data features obtained from HR records about employees containing __*8336*__ entries. 
 
 | Feature        | Type           |
-| :------------- |:-------------|
+| :------------- |:-------------:|
 | `EmployeeNumber` | 
 | `Surname` | 
 | `GivenName` | 
@@ -120,9 +120,9 @@ We have a set of data features obtained from HR records about employees containi
 
 Multiple angles were examined to identify the most prominent congestions of absenteeism.
 
-The below table investigates the breakdown of abisentism by division. with an added metric for `Culture of Absenteeism`.
+The below table investigates the breakdown of abisentism by division. 
 
-Division | # Employees | Avg tenure | Total Absenteeism | Avg. Abs. / tenure | Absenteeism Culture* |
+Division | # Employees | Avg tenure | Total Absenteeism | Avg. Abs. / tenure | Absenteeism Culture |
 | :------------- |:-------------|:-------------|:-------------|:-------------|:-------------|
 Stores | 8163 | 5 | 502722 | 16 | 29053 | 
 FinanceAndAccounting | 73 | 12 | 2918 | 13 | 80 | 
@@ -131,8 +131,18 @@ Executive | 11 | 11 | 532 | 8 | 8 |
 InfoTech | 10 | 12 | 401 | 4 | 3 | 
 Legal | 3 | 11 | 154 | 6 | 1 | 
 
-* This is a synthatic measure 
+The added metric `Culture of Absenteeism` is a synthatic measure for how strong is the absenteesm culture is in the divison. It's the byproduct of the (__*number of employees*__ x __*average absence hrs per tenure for employees in that division*__). if the avg. abs. per tenure increases, we assume that it's normalized in that division to be absent or late cumulatively, and when the number of employees is higher, it's more difficult to break and change this culture. More investments, policy, training, and time are required to influence that culture.
 
+We will further break this down by `DepartmentName` and `JobTitle` in the 2 following tables, respectively. 
+
+- Table 1
+
+- Table 2
+
+
+We find out that the most diffucilt culture in the company is __*Customer Service*__. And the job title of Cashier is the most difficlt under the customer service departnemtn.
+We also hypothise that this job title is mission-critial and a bottle neck. It may be influencing other job titles in stores, i.e. if the cashier is late or absent, there's no need for it builds less importance with meat cutter if.
+It's also important to note that if the CRM/PoS system is connected to the cashier terminal, we can explain the high co-relation between cashier absentieesm and other store functions (job titles).
 
 ## 3-   Data Prepossessing
 
@@ -201,3 +211,4 @@ The Cashier has the highest Absinteesm Culture level. In the city of Vancouver, 
 - We can quantify the exact effect of asintesm by emplyee on the revenue to find the best optimization of effort that will drive sales.
 - We can look into the fininical penalties to emplyees as they increase absentesem or show up late to reduce the waste and effect on revenues and company opertional costs. if high absence and no effect on work or rev. then consider terminating them.
 - When do latness and absentisem happen? are they related to seasons? or mostly happen in low rush hours?
+- Imporving the data collection mechanism to enchance data quality and integrity, such as systems or employee attendance managnment in stores.
