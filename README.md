@@ -95,17 +95,21 @@ Using the provided data, we'll define the underlying problem using root-cause an
 ## 1-    Problem Definition
 We have a set of data features obtained from HR records about employees containing __*8336*__ entries. 
 
+Rolls Royce-Quality Data
+
 | Feature        | Type           |
 | :------------- |:-------------:|
 | `EmployeeNumber` | 
 | `Surname` | 
 | `GivenName` | 
 | `Gender` | 
+] `ProbableGenderByGivenName` | :new:	
 | `JobTitle` | 
 | `DepartmentName` | 
 | `StoreLocation` | 
 | `Longitude` | :new:	
 | `Latitude` | :new:	
+| `StoreType` | :new:	
 | `Division` | 
 | `Age` | 
 | `LengthService` | 
@@ -113,8 +117,22 @@ We have a set of data features obtained from HR records about employees containi
 | `AbsentHoursPerTenure` | :new:	
 | `BusinessUnit` | 
 
+`ProbableGenderByGivenName` is a fetched from an extername names database to cross-check data quality.
 `AbsentHoursPerTenure` was added to better inform the annual absence for an employee regardless of their service years.
-`Longitude` & `Latitude` were added beacuse `StoreLocation` is not standardized, i.e. can be a city name or a neighborhood name. It's a good substitute for a branch name. We elicited the corresponding values of stores. These values are to proxy the location in a standard manner and __*do not represent store coordinates*__.
+`Longitude` & `Latitude` were added beacuse `StoreLocation` is not standardized, i.e. can be a city name or a neighborhood name. It's a good substitute for a branch name. We elicited the corresponding values of stores. These values are to proxy the location in a standard manner and __*do not represent store coordinates*__. This will come in handy for map visualization.
+
+`StoreType` are classified into 3 types of stores. If a customer service manager exsists and more than 40 cashoiers/
+
+Small stores vs big stores absentieesm (سقط الاثم عن الباقين في الستور الكبير)
+what number of store optimizes the absentism? (HR added units economic theory)
+
+
+Cashiers per custmer service manager ratio
+Meat cutter per Meat manager ratio
+Store manger per store emplyee ratio
+
+
+Does having a custmer service manager reduce absentieesm?
 
 ## 2-   Problem Decomposition
 
@@ -156,8 +174,9 @@ under each one of these parts and sections, there will be text to describe them 
 
 ### 3-ii       Data Cleaning
 
-there will be a lot of text written here and a lot of description of the text that is going to be written down
-under each one of these parts and sections, there will be text to describe them properly and so on and what not
+- Trim Age ends.
+- Remove duplicate values.
+- Clean cities with 2 employees.
 
 ### 3-iii       Data Wrangling
 
@@ -188,6 +207,9 @@ under each one of these parts and sections, there will be text to describe them 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
 under each one of these parts and sections, there will be text to describe them properly and so on and what no
 
+### 1-ii Gender equality analysis
+
+
 ## 2-   What is going to happen?
 
 there will be a lot of text written here and a lot of description of the text that is going to be written down
@@ -212,3 +234,4 @@ The Cashier has the highest Absinteesm Culture level. In the city of Vancouver, 
 - We can look into the fininical penalties to emplyees as they increase absentesem or show up late to reduce the waste and effect on revenues and company opertional costs. if high absence and no effect on work or rev. then consider terminating them.
 - When do latness and absentisem happen? are they related to seasons? or mostly happen in low rush hours?
 - Imporving the data collection mechanism to enchance data quality and integrity, such as systems or employee attendance managnment in stores.
+- we need to analyze the payroll system and look into the process of deboarding/retiring 65 y/o and above.
