@@ -157,6 +157,10 @@ We will further break this down by `DepartmentName` and `JobTitle` in the 2 foll
 
 - Table 2
 
+TWO VERY IMPORTANT TO ADD:
+`HasManager`
+`IsManager`
+
 
 We find out that the most diffucilt culture in the company is __*Customer Service*__. And the job title of Cashier is the most difficlt under the customer service departnemtn.
 We also hypothise that this job title is mission-critial and a bottle neck. It may be influencing other job titles in stores, i.e. if the cashier is late or absent, there's no need for it builds less importance with meat cutter if.
