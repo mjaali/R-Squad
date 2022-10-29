@@ -117,7 +117,7 @@ Multiple angles were examined to identify the most prominent congestions of abse
 
 The below table investigates the breakdown of abisentism by division. with an added metric for `Culture of Absenteeism`.
 
-Division | # Employees | Avg tenure | Total Absenteeism | Avg. Abs. / tenure | Absenteeism Culture |
+Division | # Employees | Avg tenure | Total Absenteeism | Avg. Abs. / tenure | Absenteeism Culture* |
 | :------------- |:-------------|:-------------|:-------------|:-------------|:-------------|
 Stores | 8163 | 5 | 502722 | 16 | 29053 | 
 FinanceAndAccounting | 73 | 12 | 2918 | 13 | 80 | 
@@ -126,6 +126,7 @@ Executive | 11 | 11 | 532 | 8 | 8 |
 InfoTech | 10 | 12 | 401 | 4 | 3 | 
 Legal | 3 | 11 | 154 | 6 | 1 | 
 
+* This is a synthatic measure 
 
 
 ## 3-   Data Prepossessing
@@ -189,3 +190,9 @@ under each one of these parts and sections, there will be text to describe them 
 # Recommendations
 
 The Cashier has the highest Absinteesm Culture level. In the city of Vancouver, the age `24.51` y/o and beyond is where Absenteeism hours escalate with a strong correlation for both males and females at a `slope of 0.9395x`. Since our x-intercept is `24.51`, or in other words, Cashiers below the age of 24.51 have no absinteesm hours `(0 Hrs / year)`. The avg. tenure of the Cashier is `4.58 years`. A policy to hire Cashiers of a maximum of `20 y/o` will ensure most cashiers will clear out of the company before they turn 25 and reduce overall company absenteeism significantly.
+
+# Future works
+- in our next phase of the engagment, we can investigate how can we reduce absence hours as emplyees grow service years possibly by enhancing the promotion or re-location.
+- We can quantify the exact effect of asintesm by emplyee on the revenue to find the best optimization of effort that will drive sales.
+- We can look into the fininical penalties to emplyees as they increase absentesem or show up late to reduce the waste and effect on revenues and company opertional costs. if high absence and no effect on work or rev. then consider terminating them.
+- When do latness and absentisem happen? are they related to seasons? or mostly happen in low rush hours?
