@@ -104,12 +104,17 @@ We have a set of data features obtained from HR records about employees containi
 | `JobTitle` | 
 | `DepartmentName` | 
 | `StoreLocation` | 
+| `Longitude` | :new:	
+| `Latitude` | :new:	
 | `Division` | 
 | `Age` | 
 | `LengthService` | 
 | `AbsentHours` | 
-| `BusinessUnit` | 
 | `AbsentHoursPerTenure` | :new:	
+| `BusinessUnit` | 
+
+`AbsentHoursPerTenure` was added to better inform the annual absence for an employee regardless of their service years.
+`Longitude` & `Latitude` were added beacuse `StoreLocation` is not standardized, i.e. can be a city name or a neighborhood name. It's a good substitute for a branch name. We elicited the corresponding values of stores. These values are to proxy the location in a standard manner and __*do not represent store coordinates*__.
 
 ## 2-   Problem Decomposition
 
