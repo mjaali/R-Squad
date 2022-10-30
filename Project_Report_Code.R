@@ -8,13 +8,22 @@
 #' #'[ Installing all necessary packages into R
 #' #'
 #' # i will install pacman, then use p_load() to quickly install&load all my necessary packages
-#' install.packages("pacman",     repos = "http://cran.us.r-project.org")
+ install.packages("pacman",     repos = "http://cran.us.r-project.org");
+ install.packages("tidyverse");
+ install.packages("writexl");
+ install.packages("readxl");
+ install.packages("scales");
+ install.packages("psych");
 #' 
 #' 
 #' 
 #' #'[ loading the above packages into R (run one line to load all)
-#' 
-# library(pacman); library(tidyverse); library(writexl); library(readxl); library(scales); library(psych)
+ library(pacman);
+ library(tidyverse);
+ library(writexl);
+ library(readxl);
+ library(scales);
+ library(psych)
 #' 
 #' require(pacman)
 #' pacman::p_load(
@@ -36,6 +45,10 @@
 
 setwd( dir = "C:/Users/Dhoomie/Desktop/College Blackboard materials/2022 - Graduate/1. Semester 1 ( FINALE )/4. MIS-341/1. Course Work/00. Group Project/MIS341-02_Group 4")
 AbsEmployees <- read_excel("../MIS341-02_Group 4/1. input/AbsEmployees.xlsx", sheet = 1)
+
+# Loading file - github fetch version
+setwd( dir = "/Users/mjaali/webapps/R-Squad/Assets/")
+AbsEmployees <- read_excel("MJ Version - AbsEmployees.xlsx", sheet = 1)
 
 
 #duplicating the data set to re-code if necessary
