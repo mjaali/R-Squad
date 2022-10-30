@@ -114,7 +114,7 @@ Rolls Royce-Quality Data
 
 `ProbableGenderByGivenName` is a fetched from an extername names database to cross-check data quality.
 `AbsentHoursPerTenure` was added to better inform the annual absence for an employee regardless of their service years.
-`Longitude` & `Latitude` were added beacuse `StoreLocation` is not standardized, i.e. can be a city name or a neighborhood name. It's a good substitute for a branch name. We elicited the corresponding values of stores. These values are to proxy the location in a standard manner and __*do not represent store coordinates*__. This will come in handy for map visualization.
+`Longitude` & `Latitude` were added beacuse `StoreLocation` is not standardized, i.e. can be a city name or a neighborhood name. It's a good substitute for a branch name, except Business Unit of Head Office in Vancouver. We elicited the corresponding values of stores. These values are to proxy the location in a standard manner and __*do not represent store coordinates*__. This will come in handy for map visualization.
 
 `StoreType` are classified into 3 types of stores. If a customer service manager exsists and more than 40 cashoiers/
 

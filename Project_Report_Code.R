@@ -23,7 +23,7 @@
  library(writexl);
  library(readxl);
  library(scales);
- library(psych)
+ library(psych);
 #' 
 #' require(pacman)
 #' pacman::p_load(
@@ -47,8 +47,10 @@ setwd( dir = "C:/Users/Dhoomie/Desktop/College Blackboard materials/2022 - Gradu
 AbsEmployees <- read_excel("../MIS341-02_Group 4/1. input/AbsEmployees.xlsx", sheet = 1)
 
 # Loading file - github fetch version
-setwd( dir = "/Users/mjaali/webapps/R-Squad/Assets/")
-AbsEmployees <- read_excel("MJ Version - AbsEmployees.xlsx", sheet = 1)
+setwd( dir = "/Users/mjaali/webapps/R-Squad/Assets/");
+AbsEmployees <- read_excel("MJ Version - AbsEmployees.xlsx", sheet = 1);
+AbsEmployees <- read_excel("Abdulrahman Version - AbsEmployees.xlsx", sheet = 1);
+
 
 
 #duplicating the data set to re-code if necessary
@@ -169,6 +171,10 @@ empTable_AbsLocation <- empTable_AbsLocation[, c("country", "StoreLocation", "co
 
 
 
+
+
+
+# Adding the HasManager new variable to the data frame
 
 
 
