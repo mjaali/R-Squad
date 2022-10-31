@@ -111,6 +111,7 @@ Rolls Royce-Quality Data
 | `AbsentHours` | 
 | `AbsentHoursPerTenure` | :new:	
 | `BusinessUnit` | 
+| `Location` | :new:	
 
 `ProbableGenderByGivenName` is a fetched from an extername names database to cross-check data quality.
 `AbsentHoursPerTenure` was added to better inform the annual absence for an employee regardless of their service years.
@@ -153,7 +154,7 @@ We will further break this down by `DepartmentName` and `JobTitle` in the 2 foll
 - Table 2
 
 TWO VERY IMPORTANT TO ADD:
-`HasManager`
+`HasDirectManager`
 `IsManager`
 
 
@@ -168,8 +169,8 @@ under each one of these parts and sections, there will be text to describe them 
 
 ### 3-i       Data Exploration
 
-there will be a lot of text written here and a lot of description of the text that is going to be written down
-under each one of these parts and sections, there will be text to describe them properly and so on and what not
+Locations may consist of multiple stores, e.g. Vancouvour has 415 `cashiers` which is too high.
+Also, workers maybe a mix of part-time and full-time employees. 
 
 ### 3-ii       Data Cleaning
 
@@ -225,12 +226,17 @@ under each one of these parts and sections, there will be text to describe them 
 
 # Recommendations
 
-The Cashier has the highest Absinteesm Culture level. In the city of Vancouver, the age `24.51` y/o and beyond is where Absenteeism hours escalate with a strong correlation for both males and females at a `slope of 0.9395x`. Since our x-intercept is `24.51`, or in other words, Cashiers below the age of 24.51 have no absinteesm hours `(0 Hrs / year)`. The avg. tenure of the Cashier is `4.58 years`. A policy to hire Cashiers of a maximum of `20 y/o` will ensure most cashiers will clear out of the company before they turn 25 and reduce overall company absenteeism significantly.
+The Cashier has the highest Absinteesm Culture level. In the city of Vancouver, the age `24.51` y/o and beyond is where Absenteeism hours escalate with a strong correlation for both males and females at a `slope of 0.9395x`. Since our x-intercept is `24.51`, or in other words, Cashiers below the age of 24.51 have no absinteesm hours `(0 Hrs / year)`. The avg. tenure of the Cashier is `4.58 years`. A policy to hire Cashiers of a maximum of `20 y/o` will ensure most cashiers will clear out of the company before they turn 25 and reduce overall company absenteeism significantly. However, we have to validate if these young cashiers are full-time or part-time in order to control the cost associated with high-frequancy and high-volume recruting, plus investigate the compensation increase as a result, along with the total supply of such type of workers.
 
 # Future works
-- in our next phase of the engagment, we can investigate how can we reduce absence hours as emplyees grow service years possibly by enhancing the promotion or re-location.
+- In our next phase of the engagment, we can investigate how can we reduce absence hours as emplyees grow service years possibly by enhancing the promotion, since we have a bottleneck in the director position with an avg. tenure of 18 years. VPs have less than have that tenure of an 8 years avg. and managers 5 years tenure avg.
+
 - We can quantify the exact effect of asintesm by emplyee on the revenue to find the best optimization of effort that will drive sales.
+
 - We can look into the fininical penalties to emplyees as they increase absentesem or show up late to reduce the waste and effect on revenues and company opertional costs. if high absence and no effect on work or rev. then consider terminating them.
+
 - When do latness and absentisem happen? are they related to seasons? or mostly happen in low rush hours?
+
 - Imporving the data collection mechanism to enchance data quality and integrity, such as systems or employee attendance managnment in stores.
+
 - we need to analyze the payroll system and look into the process of deboarding/retiring 65 y/o and above.
