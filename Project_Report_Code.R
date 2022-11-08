@@ -14,7 +14,10 @@
  install.packages("readxl");
  install.packages("scales");
  install.packages("psych");
-#' 
+#'
+#' packages installeds by MQ
+install.packages("descr")
+library(descr)
 #' 
 #' 
 #' #'[ loading the above packages into R (run one line to load all)
@@ -43,13 +46,13 @@
 
 # loading in the file
 
-setwd( dir = "C:/Users/Dhoomie/Desktop/College Blackboard materials/2022 - Graduate/1. Semester 1 ( FINALE )/4. MIS-341/1. Course Work/00. Group Project/MIS341-02_Group 4")
-AbsEmployees <- read_excel("../MIS341-02_Group 4/1. input/AbsEmployees.xlsx", sheet = 1)
+setwd( dir = "C:\\Users\\Lenovo\\Documents\\MIS431- Project\\")
+AbsEmployees <- read_excel("../MIS431- Project/AbsEmployees.xlsx", sheet = 1)
 
 # Loading file - github fetch version
-setwd( dir = "/Users/mjaali/webapps/R-Squad/Assets/");
-AbsEmployees <- read_excel("MJ Version - AbsEmployees.xlsx", sheet = 1);
-AbsEmployees <- read_excel("Abdulrahman Version - AbsEmployees.xlsx", sheet = 1);
+#setwd( dir = "/Users/mjaali/webapps/R-Squad/Assets/");
+#AbsEmployees <- read_excel("MJ Version - AbsEmployees.xlsx", sheet = 1);
+#AbsEmployees <- read_excel("Abdulrahman Version - AbsEmployees.xlsx", sheet = 1);
 
 
 
@@ -197,8 +200,8 @@ Model_1 <- lm(AbsentHours ~ Gender + JobTitle + DepartmentName + StoreLocation  
 
 loca <- as.data.frame.matrix(table( x = emp$JobTitle, y = emp$StoreLocation))
 loca$meow <- unique(emp$JobTitle)
-write_xlsx(loca, "../MIS341-02_Group 4/fasttablu.xlsx")
-export(loca, "../MIS341-02_Group 4/fasttabluRIO.xlsx")
+write_xlsx(loca, "../MIS431- Project/fasttablu.xlsx")
+export(loca, "../MIS431- Project/fasttabluRIO.xlsx")
 
 
 loca <- data.frame(table(emp$JobTitle, emp$StoreLocation))
@@ -287,30 +290,40 @@ empTable_DivGender <- as.data.frame(empTable_DivGender)
 empTable_DivGender$Division <- as.data.frame(empTable_DivGender_new)
 rm(empTable_DivGender_new)
 
-write_xlsx(empTable_DivGender, "../MIS341-02_Group 4/2. output/Division Vs Gender1.xlsx")
-write_excel(empTable_DivGender, "../MIS341-02_Group 4/2. output/Division Vs Gender.xlsx")
+write_xlsx(empTable_DivGender, "../MIS431- Project/2. output/Division Vs Gender1.xlsx")
+write_excel(empTable_DivGender, "../MIS431- Project/2. output/Division Vs Gender.xlsx")
 
 typeof(empTable_DivGender)
 
+OLSdata <- emp
+# ###################################### 
+# Packages installed by MQ
+install.packages('fastDummies')
+library('fastDummies')
+# #########################################
 
+OLSdata
+# In this step, we will drop the data that is not helpful in our regression, and will affect our model and results in insufficient way
 
+OLSdataDrop = subset(OLSdata, select = -c(JobTitle, EmployeeNumber, Surname, GivenName, DepartmentName ) )
 
+#'
+# Creating dummy variables
 
+OLSdataDrop <- dummy_cols(OLSdataDrop, select_columns = c('Gender', 'StoreLocation', 'Division', 'BusinessUnit', 'new', 'employeeType', 'TenureStanding'))
 
+# Deleting the columns 
 
+OLSdataDrop.2 <- dummy_cols(OLSdataDrop, select_columns = c('Gender', 'StoreLocation', 'Division', 'BusinessUnit', 'new', 'employeeType', 'TenureStanding'),
+           remove_selected_columns = TRUE)
+#'
+#'
+gsub(" ", "_", OLSdata)
+ 
+#'
+model2 <- lm(`AbsHrs/year` ~ `Age` + `LengthService` + `AbsentHours` + `Gender_F` + `Gender_M` + `StoreLocation_Abbotsford` + `StoreLocation_Aldergrove` + `StoreLocation_Bella Bella` + `StoreLocation_Blue River` + `StoreLocation_Burnaby` + `StoreLocation_Chilliwack` + `StoreLocation_Cortes Island` + `StoreLocation_Cranbrook` + `StoreLocation_Dawson Creek` + `StoreLocation_Dease Lake` + `StoreLocation_Fort Nelson` + `StoreLocation_Fort St John` + `StoreLocation_Grand Forks` + `StoreLocation_Haney` + `StoreLocation_Kamloops` + `StoreLocation_Kelowna` + `StoreLocation_Langley` + `StoreLocation_Nanaimo` + `StoreLocation_Nelson` + `StoreLocation_New Westminister` + `StoreLocation_New Westminster` + `StoreLocation_North Vancouver` + `StoreLocation_Ocean Falls` + `StoreLocation_Pitt Meadows` + `StoreLocation_Port Coquitlam` + `StoreLocation_Prince George` + `StoreLocation_Princeton` + `StoreLocation_Quesnel` + `StoreLocation_Richmond` + `StoreLocation_Squamish` + `StoreLocation_Surrey` + `StoreLocation_Terrace` + `StoreLocation_Trail` + `StoreLocation_Valemount` + `StoreLocation_Vancouver` + `StoreLocation_Vernon` + `StoreLocation_Victoria` + `StoreLocation_West Vancouver` + `StoreLocation_White Rock` + `StoreLocation_Williams Lake` + `Division_Executive` + `Division_FinanceAndAccounting` + `Division_HumanResources` + `Division_InfoTech` + `Division_Legal` + `Division_Stores` + `BusinessUnit_HeadOffice` + `BusinessUnit_Stores` + `new_about to die` + `new_mid life crisis` + `new_old` + `new_young` + `employeeType_Staff` + `employeeType_Worker` + `TenureStanding_Great Attendence` + `TenureStanding_Standard Attendence` + `TenureStanding_Bad Attendence` , data = OLSdataDrop.2)
 
+#write.csv(OLSdataDrop.2,"C:\\Users\\Lenovo\\Documents\\MIS431- Project\\Dummy.csv", row.names = TRUE)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+model2 <- lm(AbsentHours ~ 'Age' + LengthService, data = OLSdataDrop.2)
 
