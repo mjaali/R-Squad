@@ -1,0 +1,201 @@
+---
+title: "MIS-341 Employee Absenteesim Course Project"
+author: "Group4_Section2"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    theme: readable
+---
+
+### Notes & Remarks
+
+This r markdown project is the work of group 04 students undertaking the course *MIS-341 : Introduction to Data Analytics* in **King Fahad University of Petroleum and Minerals** within KFUPM Business school department
+
+-   Kindly press ***`Ctrl + Shift + O`*** to quickly browse through the code
+-   all the codes are commented, to undo this effect: kindly select the codes in the chunks and press ***`Ctrl + Shift + C`***
+-   This project is covered in a highly detailed manner, kindly visit our github repository to get the full in-depth resources of the project [Github](https://github.com/mjaali/R-Squad)
+-   
+
+# Setting the resources
+
+In this first segment, we will cover the essential tasks to do prior to any analysis. we will prepare the R studio IDE with all the required resources, and organize them in a clean manner. These duties include the following :
+
+-   Downloading packages used for the project
+
+The packages we will use will be retrieved from the official CRAN repository, they are basically packages designed and created by the community in order to simplify rather complicated codes into clear functions
+
+-   Loading packages
+
+in R studio, packages have to be installed then loaded into the environment. Therefore, we specified a chunk code for the purpose of loading the packages
+
+-   Setting the Directory
+
+R studio has a built in function of simplifying this task when creating an R project. But, since this project was shared on the cloud via github, we will reserve chunk of code that will set the directory per member.
+
+-   Importing the Data set
+
+The final step of R preparation is to import in the data for analysis. We will use clear names throughout our code to make it easier for a reviewer to investigate our analysis and follow along the coding process.
+
+------------------------------------------------------------------------
+
+## Libraries and Packages
+
+```{r}
+
+#'[ FIRST | we are going to creat a code that will install all codes required for us to do our analysis
+
+
+# install.packages("tidyverse") # one of the best all-round packages for data processing
+# install.packages("writexl")   # a package for reading/importing excel files into R
+# install.packages("readxl")    # a package for writing/exporting R files into excel
+# install.packages("scales")    # a package used to scale vectors to percentages
+# install.packages("psych")     # an analysis package used for regression related statistics
+# 
+# #' packages installed by MQ
+# install.packages("descr")
+
+
+#'[ SECOND | we load all the packages into R 
+
+# library(tidyverse); library(writexl); library(readxl); library(scales); library(psych); library(desc)
+
+
+
+```
+
+## Directory & Import
+
+```{r}
+
+#'[ Setting the Directory
+# setwd( dir = "C:\\Users\\Lenovo\\Documents\\MIS431- Project\\")
+
+#'[ Loading the File
+# AbsEmployees <- read_excel("../MIS431- Project/AbsEmployees.xlsx", sheet = 1)
+
+# Loading file - github fetch version
+#setwd( dir = "/Users/mjaali/webapps/R-Squad/Assets/");
+#AbsEmployees <- read_excel("MJ Version - AbsEmployees.xlsx", sheet = 1);
+#AbsEmployees <- read_excel("Abdulrahman Version - AbsEmployees.xlsx", sheet = 1);
+
+
+
+#duplicating the data set to re-code if necessary
+# emp  <- AbsEmployees
+# empR <- emp
+
+#'* NOTE *
+#'[ emp  : will house the data ready for analysis ( Whenever I want to go back to my original data before any adjustments, I will use AbsEmployees )
+#'[ empR : will house the data archived from emp  (I never delete data, I always archive it in case I need to go back to it for the case of mistakes)
+
+
+```
+
+------------------------------------------------------------------------
+
+# Data Pre-processing
+
+## Data Exploration
+
+After browsing through the data and understanding its structure, we defined some cases that need to be covered before proceeding with the analysis. Instead of deleting the suspected entries, we will create a second data frame that will house the data rejected from the analysis. Therefore, we will import the `original data set as AbsEmployees`, and then re-assign them into a data analysis set and a rejected set :
+
+> ***emp*** : Is the name of the data analysis set that will contain the data set ready-for-analysis
+
+> ***empR*** : Is the data set rejected from analysis, and it will include the following :
+
+-   Ambiguous store location entries
+-   Duplicated entries
+-   Incorrect Age Entries
+
+## Data Cleaning
+
+### Extracting the data
+
+We have observed that some data entries (employees), have ages below 18, and above 65. Legal age for working in Canada is 18 on average. Through further discussion with our manager, we have dictated that employees with ages out of these bounds will be removed from analysis.
+
+Furthermore, some of the entries based on their store location are inconsistent. For example, A store location in a rural area will only have a single cashier. This is clearly the issue of a wrong entry of some scale in the data base. Which has also been extracted out of our analysis
+
+The final case observed are of duplicated entries. It is uncommon to have multiple employees across different store locations to share the same first & last name, job title and so on. But it is outside the realms of reality to have multiple employees share many indicative features in the data base. Our decision was to also exclude those entries outside of our analysis, to keep our analysis as authentic as possible.
+
+**Note :** `empR` data set will have a column on the right-most specifying why the entry was rejected from analysis. Kindly refer to it in-case of amendments.
+
+```{r}
+
+#'[ Extracting rejected data to empR data set
+
+# # creating new columns that will help with the analysis (will be removed later form the environments and data frame )
+# empR$dup <- data.frame(paste(empR$Surname, empR$GivenName, empR$Gender, empR$JobTitle, empR$DepartmentName, empR$StoreLocation ))
+# 
+# 
+# #'[ Employee Age cleaning ]
+# 
+# # extracting age restrictions
+# empR_age <- subset(empR, empR$Age < 18 | empR$Age > 65 | empR$Age - empR$LengthService < 18 )
+# 
+# 
+# # providing a columns with explanation to why the row was removed from the analysis
+# empR_age$drop <-  case_when( empR_age$Age < 18 ~ "Under Age",
+#                              empR_age$Age > 65 ~ "Over Age",
+#                              empR_age$Age - empR_age$LengthService < 18 ~ "Under Age")
+# 
+# 
+# #'[ Archiving duplicated Employee Entries ]
+# 
+# # extracting duplicated entries
+# empR_dupli <- empR[duplicated(empR$dup), ]
+# 
+# # providing a column with explanation to why the row was removed from the analysis
+# empR_dupli$drop <- paste("duplicated entry")
+# 
+# # merging archived data
+# empR <- rbind(empR_age, empR_dupli)
+# 
+# # deleting extra columns and removing variables from environment
+# empR <- subset(empR, select = -c(dup))
+# rm(empR_age, empR_dupli)
+
+
+```
+
+### Cleaning the Ready-for-Analysis Data
+
+```{r}
+
+#'[ removing incorrect entries from the data set, and preparing it for analysis
+
+# # creating new columns that will help with the analysis (will be removed later form the environments and data frame )
+# emp$dup <- data.frame(paste(emp$Surname, emp$GivenName, emp$Gender, emp$JobTitle, emp$DepartmentName, emp$StoreLocation ))
+# 
+# 
+# #'[ Deleting Under/over age Employee Entries ]
+# emp <- emp %>% 
+#   filter(, Age > 18) %>% 
+#   filter(, Age < 65) %>% 
+#   filter(, Age - LengthService > 18)
+# 
+# 
+# #'[ Deleting duplicated Employee Entries ]
+# 
+# # deleting duplicate entries
+# emp <- emp[!duplicated(emp$dup), ]
+# 
+# # deleting excess columns
+# emp <- subset(emp, select = -c(dup))
+
+
+```
+
+## Data Wrangling
+
+## Data Classification
+
+------------------------------------------------------------------------
+
+# Analysis
+
+## Descriptive Statistics
+
+## Predictive Statistics
+
+# Recommendation
