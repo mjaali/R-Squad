@@ -60,26 +60,6 @@ i can write things as in subscript in r studio ~SomethingLikeThis~ , to use subs
 > below are the R packages/libraries to be used in the report __*help*__
 
 
-```{r Packages}
-#'[ Installing all necessary packages into R
-
-install.packages("tidyverse",  repos = "http://cran.us.r-project.org")
-install.packages("pacman",     repos = "http://cran.us.r-project.org")
-install.packages("writexl",    repos = "http://cran.us.r-project.org")
-install.packages("readxl",     repos = "http://cran.us.r-project.org")
-install.packages("rmarkdown",  repos = "http://cran.us.r-project.org")       
-install.packages("here",       repos = "http://cran.us.r-project.org")
-
-#'[ loading the above packages into R
-
-library(tidyverse)
-library(pacman)
-library(writexl)
-library(readxl)
-library(rmarkdown)
-library(here)
-```
-
 -----
 
 # Introduction
