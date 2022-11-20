@@ -188,6 +188,53 @@ The final case observed are of duplicated entries. It is uncommon to have multip
 
 ## Data Wrangling
 
+In this part, we are concerned with any manipulation required in order to improve the statistical accuracy and quality of our study. Therefore, after a keen study of the data and the case at hand, we have introduced the following variables :
+
+-   **AbsHoursPerTenure** : This variable will be our dependent variable, the feature that is already existent in the data only accounts for the absent hours, regardless of the years of tenure. Since it is not statistically feasible to compare the absence of multiple employees with different tenures, it was decided to make a new variable that will take the proportional absence hours per year of service.
+
+-   **Location** : The addition of this variable will only be used in the descriptive analysis of the case. it will aid Power BI into identifying the correct store location in Canada.
+
+-   **Longitude** : This
+
+-   **Latitude** : This
+
+-   **StoreType** : This
+
+-   **Probable_Gender_By_Given_Name** : This
+
+
+```{r}
+
+# creating a proportional Absence hours per year in the company
+emp$'AbsHrsPerTenure'   <- (emp$AbsentHours/emp$LengthService)
+
+# adding a country location variable
+emp$Country <- paste("Canada")
+
+# adding a longitude variable
+
+# adding a latitude variable
+
+# adding a store type variable
+
+# adding a Probable_Gender_By_Given_Name variable
+
+
+```
+
+
+
+after the addition of the variables that we will use for prediction. We will remove unnecessary variables from the statistical analysis, such variables are within the realms of **EmployeeNumber**, **Surname**, **GivenName**... etc. Any variable that will not affect the dependent variable will be removed from the data set.
+
+
+-   unify the absence hrs per tenure
+
+-   meet with the team, finalize the new observations that will be included
+
+-   decide on which of the data wrangling i did gets to stay, a lot of them are useless and i have no idea why they even exist
+
+-   attempt to understand what aljaali and alquraini did in their bits
+
 ## Data Classification
 
 ------------------------------------------------------------------------
@@ -197,5 +244,8 @@ The final case observed are of duplicated entries. It is uncommon to have multip
 ## Descriptive Statistics
 
 ## Predictive Statistics
+
+
+-----
 
 # Recommendation
