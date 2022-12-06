@@ -207,9 +207,15 @@ under each one of these parts and sections, there will be text to describe them 
 # Recommendations
 
 The Cashier has the highest Absinteesm Culture level. In the city of Vancouver, the age `24.51` y/o and beyond is where Absenteeism hours escalate with a strong correlation for both males and females at a `slope of 0.9395x`. Since our x-intercept is `24.51`, or in other words, Cashiers below the age of 24.51 have no absinteesm hours `(0 Hrs / year)`. The avg. tenure of the Cashier is `4.58 years`. A policy to hire Cashiers of a maximum of `20 y/o` will ensure most cashiers will clear out of the company before they turn 25 and reduce overall company absenteeism significantly. However, we have to validate if these young cashiers are full-time or part-time in order to control the cost associated with high-frequancy and high-volume recruting, plus investigate the compensation increase as a result, along with the total supply of such type of workers.
+If deployed in Vancouver, it can reduce the overall cashier abs hrs by (%) (hrs) and overall company to (x hrs) in year 1 alone.
+By year 5:
+
+
 
 # Future works
-- In our next phase of the engagment, we can investigate how can we reduce absence hours as emplyees grow service years possibly by enhancing the promotion, since we have a bottleneck in the director position with an avg. tenure of 18 years. VPs have less than have that tenure of an 8 years avg. and managers 5 years tenure avg.
+- In our next phase of the engagment, we can look into the time of day where most abs. hrs cluster. Couples with customer rush hours, it can inform when do abstiesemt hrs make less impact on the orgnazation. This impact can be quantified or estimated, if the impact in neglabile, then may be a more relaxed policy can improve emplyee satisfaction in the orginazation. Emplyee statifaction is proven to improve shareolders value.
+
+- We can investigate how can we reduce absence hours as emplyees grow service years possibly by enhancing the promotion, since we have a bottleneck in the director position with an avg. tenure of 18 years. VPs have less than have that tenure of an 8 years avg. and managers 5 years tenure avg.
 
 - We can quantify the exact effect of asintesm by emplyee on the revenue to find the best optimization of effort that will drive sales.
 
