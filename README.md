@@ -82,8 +82,8 @@ Rolls Royce-Quality Data
 | `JobTitle` | 
 | `DepartmentName` | 
 | `StoreLocation` | 
-| `Longitude` | :new:	
-| `Latitude` | :new:	
+| `EmployeeType` | :new:	
+| `EmployeeSector` | :new:	
 | `StoreType` | :new:	
 | `Division` | 
 | `Age` | 
@@ -91,12 +91,12 @@ Rolls Royce-Quality Data
 | `AbsentHours` | 
 | `AbsentHoursPerTenure` | :new:	
 | `BusinessUnit` | 
-| `Location` | :new:	
+
 
 `ProbableGenderByGivenName` is a fetched from an extername names database to cross-check data quality.
 `AbsentHoursPerTenure` was added to better inform the annual absence for an employee regardless of their service years.
-`Longitude` & `Latitude` were added beacuse `StoreLocation` is not standardized, i.e. can be a city name or a neighborhood name. It's a good substitute for a branch name, except Business Unit of Head Office in Vancouver. We elicited the corresponding values of stores. These values are to proxy the location in a standard manner and __*do not represent store coordinates*__. This will come in handy for map visualization.
-
+`EmployeeType` This new variable will identify which type of employee we are studying, are they a working employee as a cashier or a back-end employee as a finance staff, this will help us identify which employee we can't afford to go absent.
+`EmployeeSector` This variable will help us identify absenteeism based on the sector the employee works in, it answers the question of "Are finance employees more likely to go absent in comparison to HR employees?".
 `StoreType` are classified into 3 types of stores. If a customer service manager exsists and more than 40 cashoiers/
 
 Small stores vs big stores absentieesm (سقط الاثم عن الباقين في الستور الكبير)
