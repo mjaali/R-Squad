@@ -16,47 +16,32 @@ This r markdown project is the work of group 04 students undertaking the course 
 -   all the codes are commented, to undo this effect: kindly select the codes in the chunks and press ***`Ctrl + Shift + C`***
 -   This project is covered in a highly detailed manner, kindly visit our github repository to get the full in-depth resources of the project [Github](https://github.com/mjaali/R-Squad)
 
-
 # Setting the resources
 
 In this first segment, we will cover the essential tasks to do prior to any analysis. we will prepare the R studio IDE with all the required resources, and organize them in a clean manner. These duties include the following :
 
-
-
 -   Downloading packages used for the project
 
 The packages we will use will be retrieved from the official CRAN repository, they are basically packages designed and created by the community in order to simplify rather complicated codes into clear functions
- 
- 
-
 
 -   Loading packages
 
 in R studio, packages have to be installed then loaded into the environment. Therefore, we specified a chunk code for the purpose of loading the packages
 
-
-
 -   Setting the Directory
 
 R studio has a built in function of simplifying this task when creating an R project. But, since this project was shared on the cloud via github, we will reserve chunk of code that will set the directory per member.
 
-
-
 -   Importing the Data set
 
 The final step of R preparation is to import in the data for analysis. We will use clear names throughout our code to make it easier for a reviewer to investigate our analysis and follow along the coding process.
-
-
 
 ------------------------------------------------------------------------
 
 ## Libraries and Packages
 
 ```{r}
-
 #'[ FIRST | we are going to creat a code that will install all codes required for us to do our analysis
-
-
 # install.packages("tidyverse") # one of the best all-round packages for data processing
 # install.packages("writexl")   # a package for reading/importing excel files into R
 # install.packages("readxl")    # a package for writing/exporting R files into excel
@@ -65,42 +50,40 @@ The final step of R preparation is to import in the data for analysis. We will u
 # 
 # #' packages installed by MQ
 # install.packages("descr")
-
-
 #'[ SECOND | we load all the packages into R 
-
 library(tidyverse); library(writexl); library(readxl); library(scales); library(psych); library(desc)
-
-
-
 ```
 
 ## Directory & Import
 
 ```{r}
 
+# Abdulrahman:
+
 #'[ Setting the Directory
-setwd( dir = "D:/4. MIS-341/1. Course Work/00. Group Project/MIS341-02_Group 4")
+#setwd( dir = "D:/4. MIS-341/1. Course Work/00. Group Project/MIS341-02_Group 4")
 
 #'[ Loading the File
-AbsEmployees <- read_excel("../MIS341-02_Group 4/1. input/AbsEmployees.xlsx", sheet = 1)
+#AbsEmployees <- read_excel("../MIS341-02_Group 4/1. input/AbsEmployees.xlsx", sheet = 1)
 
+# Mohammed Alquraini:
+
+#'[ Setting the Directory
+setwd( dir = "C:\\Users\\Lenovo\\Documents\\MIS431- Project\\")
+#'[ Loading the File
+AbsEmployees <- read_excel("../MIS431- Project/AbsEmployees.xlsx", sheet = 1)
+
+####
 # # Loading file - github fetch version
 # setwd( dir = "/Users/mjaali/webapps/R-Squad/Assets/");
 # AbsEmployees <- read_excel("MJ Version - AbsEmployees.xlsx", sheet = 1);
 # AbsEmployees <- read_excel("Abdulrahman Version - AbsEmployees.xlsx", sheet = 1);
-
-
-
 #duplicating the data set to re-code if necessary
 emp  <- AbsEmployees
 empR <- emp
-
 #'* NOTE *
 #'[ emp  : will house the data ready for analysis ( Whenever I want to go back to my original data before any adjustments, I will use AbsEmployees )
 #'[ empR : will house the data archived from emp  (I never delete data, I always archive it in case I need to go back to it for the case of mistakes)
-
-
 ```
 
 ------------------------------------------------------------------------
@@ -111,13 +94,7 @@ empR <- emp
 
 After browsing through the data and understanding its structure, we defined some cases that need to be covered before proceeding with the analysis. Instead of deleting the suspected entries, we will create a second data frame that will house the data rejected from the analysis. Therefore, we will import the `original data set as AbsEmployees`, and then re-assign them into a data analysis set and a rejected set :
 
-> ***emp*** : Is the name of the data analysis set that will contain the data set ready-for-analysis
-
-> ***empR*** : Is the data set rejected from analysis, and it will include the following :
-
--   Ambiguous store location entries
--   Duplicated entries
--   Incorrect Age Entries
+> ***emp*** : Is the name of the data analysis set that will contain the data set ready-for-analysis ***empR*** : Is the data set rejected from analysis, and it will include the following : - Ambiguous store location entries - Duplicated entries - Incorrect Age Entries
 
 ## Data Cleaning
 
@@ -132,69 +109,44 @@ The final case observed are of duplicated entries. It is uncommon to have multip
 **Note :** `empR` data set will have a column on the right-most specifying why the entry was rejected from analysis. Kindly refer to it in-case of amendments.
 
 ```{r}
-
 #'[ Extracting rejected data to empR data set
-
 # creating new columns that will help with the analysis (will be removed later form the environments and data frame )
 empR$dup <- data.frame(paste(empR$Surname, empR$GivenName, empR$Gender, empR$JobTitle, empR$DepartmentName, empR$StoreLocation ))
-
-
 #'[ Employee Age cleaning ]
-
 # extracting age restrictions
 empR_age <- subset(empR, empR$Age < 18 | empR$Age > 65 | empR$Age - empR$LengthService < 18 )
-
-
 # providing a columns with explanation to why the row was removed from the analysis
 empR_age$drop <-  case_when( empR_age$Age < 18 ~ "Under Age",
                              empR_age$Age > 65 ~ "Over Age",
                              empR_age$Age - empR_age$LengthService < 18 ~ "Under Age")
-
-
 #'[ Archiving duplicated Employee Entries ]
-
 # extracting duplicated entries
 empR_dupli <- empR[duplicated(empR$dup), ]
-
 # providing a column with explanation to why the row was removed from the analysis
 empR_dupli$drop <- paste("duplicated entry")
-
 # merging archived data
 empR <- rbind(empR_age, empR_dupli)
-
 # deleting extra columns and removing variables from environment
 empR <- subset(empR, select = -c(dup))
 rm(empR_age, empR_dupli)
-
-
 ```
 
 ### Cleaning the Ready-for-Analysis Data
 
 ```{r}
-
 #'[ removing incorrect entries from the data set, and preparing it for analysis
-
 # creating new columns that will help with the analysis (will be removed later form the environments and data frame )
 emp$dup <- data.frame(paste(emp$Surname, emp$GivenName, emp$Gender, emp$JobTitle, emp$DepartmentName, emp$StoreLocation ))
-
-
 #'[ Deleting Under/over age Employee Entries ]
 emp <- emp %>%
   filter(, Age > 18) %>%
   filter(, Age < 65) %>%
   filter(, Age - LengthService > 18)
-
-
 #'[ Deleting duplicated Employee Entries ]
-
 # deleting duplicate entries
 emp <- emp[!duplicated(emp$dup), ]
-
 # deleting excess columns
 emp <- subset(emp, select = -c(dup))
-
-
 ```
 
 ## Data Wrangling
@@ -203,31 +155,19 @@ In this part, we are concerned with any manipulation required in order to improv
 
 -   **AbsHoursPerTenure** : This variable will be our dependent variable, the feature that is already existent in the data only accounts for the absent hours, regardless of the years of tenure. Since it is not statistically feasible to compare the absence of multiple employees with different tenures, it was decided to make a new variable that will take the proportional absence hours per year of service.
 
-
 -   **StoreType** : Store Types are classified into 3 types of stores. If a customer service manager exsists and more than 40 cashoiers
-
 
 -   **Probable_Gender_By_Given_Name** : is a fetched from an extername names database to cross-check data quality.
 
-
 -   **EmployeeType** : This new variable will identify which type of employee we are studying, are they a working employee as a cashier or a back-end employee as a finance staff, this will help us identify which employee we can't afford to go absent
-
 
 -   **EmployeeSector** : This variable will help us identify absenteeism based on the sector the employee works in, it answers the question of "Are finance employees more likely to go absent in comparison to HR employees?".
 
-
-
-
-
 ```{r}
-
 # creating a proportional Absence hours per year in the company
 emp$'AbsHrsPerTenure'   <- (emp$AbsentHours/emp$LengthService)
-
 # adding a store type variable
-
 # adding a Probable_Gender_By_Given_Name variable
-
 # adding a variable identifying the type of employee
 emp$EmployeeType <- if_else( emp$JobTitle %in% c("Cashier", "Produce Clerk", "Shelf Stocker", "Dairy Person", "Meat Cutter", "Baker"), "Working Employee",
                              if_else(emp$JobTitle %in% c("Store Manager", "Customer Service Manager", "Produce Manager", "Processed Foods Manager", "Dairy Manager", "Meats Manager", "Bakery Manager"), "Work-Manager Employee",
@@ -235,64 +175,38 @@ emp$EmployeeType <- if_else( emp$JobTitle %in% c("Cashier", "Produce Clerk", "Sh
                                              if_else(emp$JobTitle %in% c("Director, Audit", "Director, Investments", "Director, Accounting", "Director, Accounts Payable", "Director, Accounts Receivable", "Director, Training", "Director, Compensation", "Director, Labor Relations", "Director, Recruitment", "Director, Employee Records", "Director, HR Technology"), "Staff-Manager Employee",
                                                      if_else(emp$JobTitle %in% c("VP Finance", "Exec Assistant, Finance", "VP Human Resources", "Exec Assistant, Human Resources", "Exec Assistant, Human Resources", "VP Stores", "Exec Assistant, VP Stores", "CIO", "CEO", "Legal Counsel", "Exec Assistant, Legal Counsel", "CHief Information Officer" ), "Executive Employee",
                                                              emp$JobTitle)))))
-
-
-
 # adding a unit categorizing the division of the employee
 emp$EmployeeSector <- if_else(emp$JobTitle %in% c("Cashier", "Produce Clerk", "Shelf Stocker", "Dairy Person", "Meat Cutter", "Baker", "Store Manager", "Customer Service Manager", "Produce Manager", "Processed Foods Manager", "Dairy Manager", "Meats Manager", "Bakery Manager"), "Stores Sector",
                       if_else(emp$JobTitle %in% c("Trainer", "Compensation Analyst", "Labor Relations Analyst", "Recruiter", "Benefits Admin", "HRIS Analyst", "Systems Analyst", "Corporate Lawyer", "Director, Training", "Director, Compensation", "Director, Labor Relations", "Director, Recruitment", "Director, Employee Records", "Director, HR Technology"), "Human Resources Sector",
                               if_else(emp$JobTitle %in% c("Auditor", "Investment Analyst", "Accounting Clerk", "Accounts Payable Clerk", "Accounts Receiveable Clerk", "Director, Audit", "Director, Investments", "Director, Accounting", "Director, Accounts Payable", "Director, Accounts Receivable"), "Finance Sector",
                                       "Chief/BoD")))
-
 unique(emp$Sector)
 unique(emp$EmployeeType)
-
-
-
-
-
-
 ```
 
-
-
-
-
 ## Data Classification
-
 
 after the addition of the variables that we will use for prediction. We will remove unnecessary variables from the statistical analysis, such variables are within the realms of **EmployeeNumber**, **Surname**, **GivenName**... etc. Any variable that will not affect the dependent variable will be removed from the data set.
 
 Additionally, we will ensure data variables represent their correct data types. We will make sure a number variable is identified as `double` instead of `character`. We have to ensure the data types are assignet correctly in order to create dummy variables and use our predictive models ensuring our results are valid.
 
-
 ```{r}
-
-
 # removing excess variables and re-ordering the data
 emp <- emp %>% 
   select(, "EmployeeSector", "EmployeeType", "Gender", "JobTitle", "DepartmentName", "Division", "BusinessUnit", "StoreLocation", "Age", "LengthService", "AbsentHours", "AbsHrsPerTenure" )
-
 # assiging the correct data types
 glimpse(emp)
-
 emp$EmployeeSector <- as.factor(emp$EmployeeSector)
 emp$EmployeeType <- as.factor(emp$EmployeeType)
 emp$Gender <- as.factor(emp$Gender)
 emp$DepartmentName <- as.factor(emp$DepartmentName)
 emp$Division <- as.factor(emp$Division)
 emp$BusinessUnit <- as.factor(emp$BusinessUnit)
-
 # the rest of the variables are correctly assigned (as intended)
 glimpse(emp)
-
-
-
 ```
 
-
 with the above codes in place, we have prepared our data for analysis. we explored the data for potential incorrect entries, we examined and removed any observation to another data set `empR`. additionally, we cleaned our main data set, added new variables to be studied, assigned the correct data types and ensured the data will function properly using r language statistical predictive models. `emp` is ready-for-analysis, and we will proceed to the next part of the report were we clarify how we will conduct our analysis to find the most influencial factors relating to employee absenteeism.
-
 
 ------------------------------------------------------------------------
 
@@ -302,7 +216,163 @@ with the above codes in place, we have prepared our data for analysis. we explor
 
 ## Predictive Statistics
 
+```{r}
+# Firstly, we will run a model with all variables.
 
------
+model00 <- lm(AbsentHours ~., data = emp)
+
+
+##################
+
+# We will do our correlation matrix, but since our data contain numirc and nonnumirc variable, we will do the correlation matrix manually.
+
+m_V1 <- model.matrix(~ AbsentHours - 1, emp)
+m_V2 <- model.matrix(~ Gender - 1, emp)
+m_V3 <- model.matrix(~ JobTitle - 1, emp)
+m_V4 <- model.matrix(~ DepartmentName - 1, emp)
+m_V5 <- model.matrix(~ StoreLocation - 1, emp)
+m_V6 <- model.matrix(~ Division - 1, emp)
+m_V7 <- model.matrix(~ BusinessUnit - 1, emp)
+m_V8 <- model.matrix(~ Age - 1, emp)
+m_V9 <- model.matrix(~ LengthService - 1, emp)
+m_V10 <- model.matrix(~ EmployeeSector - 1, emp)
+m_V11 <- model.matrix(~ EmployeeType - 1, emp)
+m_V12 <- model.matrix(~ AbsHrsPerTenure - 1, emp)
+##
+
+# Now we will do our correlation matrix between our response variable and other variables in the dataset.
+
+cor(m_V1, m_V2)
+cor(m_V1, m_V3)
+cor(m_V1, m_V4) 
+cor(m_V1, m_V5)
+cor(m_V1, m_V6)
+cor(m_V1, m_V7) 
+cor(m_V1, m_V8)
+cor(m_V1, m_V9)
+cor(m_V1, m_V10) 
+cor(m_V1, m_V11)
+cor(m_V1, m_V12)
+
+# After computing the correlation between our response variable and other variables, we will do tests of the correlations between some variables to test our assumptions of having multycolinearity between some variables.
+
+# First test will be between BusinessUnit and Division.
+
+cor(m_V6, m_V7) 
+
+# As we can see, we have a significant 100% correlation between DivisionStores and (BusinessUnitHeadOffice and BusinessUnitStores), which is indecates that the presence of the two variables in our model will result in a multyculinearity issues.
+# Therefore, our optimal solution is to remove one of the two variables.
+
+#############
+
+# Now, we will test the correlation between JubTitle and DepartmentName.
+
+cor(m_V3, m_V4)
+
+# Based on the optained results, we can conclude that the precense of these two variables will create a problem of multicolinearity, due to the high correlation (more than95%) between some of the observations.
+
+# Therefore, our optimal solution is to remove one of the two variables.
+
+
+#############
+# For the other variables, there is  no need for testing the correlation between them, due to that it seems that there is no significant correlation between them, but if a high correlation was precent, R will find it and solve the problem.
+
+########################
+
+
+PredData <- emp
+
+# (PredData) refer to the data that we are going to use in our predictions and model building.
+
+
+PredData = subset(PredData, select = -c(DepartmentName, Division) )
+
+# We have deleted the listed variables to impelement our first model because of the below reasons:
+
+
+# DepartmentName: Becuase it is related to the JubTitle, therefore, if we include it in the model a multicolieanerity problem will rise.
+
+# Division: Becuase it is related to the BusinessUnit, therefore, if we include it in the model a multicolieanerity problem will rise.
+
+
+model01 <- lm(AbsentHours ~., data = PredData)
+anova(model01)
+
+# According to our ANOVA table it is clear that all of our variables are significant based on P-value test approach.
+
+
+###################################
+
+# Now, we will try other methods of building our final model using different approaches of building models, listed below:
+
+# 1- Backward elemenation
+
+# 2 - Forward Stepwise
+
+###################################
+
+# Backward elemination method:
+
+BackwardData <- emp
+
+# BackwardData represent the data that we are going to use to impelemente our model using backward elemination method.
+
+Model02 <- lm(AbsentHours ~., data = BackwardData)
+
+Model02 <- step(Model02, direction = "backward", trace=FALSE ) 
+
+#Now, we will view the results of Backward elemination regression
+
+Model02$anova
+
+#Finally, we will view our final model of backward elemination method.
+
+Model02$coefficients
+
+#####################################
+
+# Here, we will use Forward stepwise regression method
+
+Stipwisedata <- emp
+
+# Stipwisedata represent the data that we are going to use to impelemente our model using Forward stepwise method.
+
+
+# To impelement our forward stipwise method we should folow the folowing steps:
+
+
+#Firstly, we will define our intercept-only model
+
+intercept_only <- lm(AbsentHours~ 1, data=Stipwisedata)
+
+#Secondly, we will define a model with all predictors
+
+model04 <- lm(AbsentHours ~ ., data=Stipwisedata)
+
+
+# Finally, we wil perform forward stepwise regression
+
+forwardModel <- step(intercept_only, direction='forward', scope=formula(model04), trace=0)
+
+#Now, we will view the results of forward stepwise regression
+
+forwardModel$anova
+
+#At the end, we will view our final model of forward stepwise method.
+
+forwardModel$coefficients
+
+
+##################################################
+
+# As we can see, using these two approaches (Backward elemination, Forward stepwise), we got the same results!. Therefore, our optimal model will be with the coffecients given below:
+
+
+
+# To be continue........ :)
+```
+
+------------------------------------------------------------------------
 
 # Recommendation
+
