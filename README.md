@@ -43,22 +43,10 @@ output:
 
 -----
 
-my second favorite theme is         $Cerulean$
-
-
 # Execututive Summary
 
-[press this linked to be hacked](https://www.youtube.com/watch?v=tKUufzpoHDE&t=183s&ab_channel=JalayerAcademy)
-
-I guess i can type `use the tilde symbol ~ , not the half quotation '' ` here, so i would like to > quote that i am amazing
-
-just use the keyboard shortcut **Ctrl Alt i** so this is the best ever
-and to quickly knit the rmd press **Ctrl Shift K**
-
-i can write things as in subscript in r studio ~SomethingLikeThis~ , to use subscript, don't ~UseSpacesBetweenWords~
-
-> below are the R packages/libraries to be used in the report __*help*__
-
+executive summary tells people who are browsing reports
+"is this report explaining what i am looking for? "
 
 -----
 
