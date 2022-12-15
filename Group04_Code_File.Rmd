@@ -559,6 +559,7 @@ Model16$coefficients
 
 # As we can see, using these two approaches (Backward elemination, Forward stepwise), we got the same results!. Therefore, our optimal model will be either Backward elemination or Forward stepwise with the coffecients showing in the ANOVA table.
 
+rm(m_V1, m_V2, m_V3, )
 
 
 # To be continued........ :)
