@@ -217,14 +217,12 @@ with the above codes in place, we have prepared our data for analysis. we explor
 ## Predictive Statistics
 
 ```{r}
-# Firstly, we will run a model with all variables.
-
-model00 <- lm(AbsentHours ~., data = emp)
-
-
 ##################
 
-# We will do our correlation matrix, but since our data contain numirc and nonnumirc variable, we will do the correlation matrix manually.
+#Firstly, We will do our correlation matrix to detirmine the correlation between the independent variables and our respons variable, but since our data contain numirc and nonnumirc variable, we will do the correlation matrix manually.
+
+# Note* 
+#   We have selected our respond variable to be AbsentHours.
 
 m_V1 <- model.matrix(~ AbsentHours - 1, emp)
 m_V2 <- model.matrix(~ Gender - 1, emp)
@@ -279,6 +277,88 @@ cor(m_V3, m_V4)
 
 ########################
 
+# After computing the correlation matrix, we will try to run models for each variable to detirmine which variable has the highest impact.
+
+# for our individuals model we will use (emp) as our dataset.
+
+
+
+model01 <- lm(AbsentHours ~Gender, data = emp)
+
+summary(model01)$r.squared
+
+# R-squared of model1 is 0.01436839
+
+model02 <- lm(AbsentHours ~JobTitle, data = emp)
+
+summary(model02)$r.squared
+
+# R-squared of model02 is 0.006038185
+
+model03 <- lm(AbsentHours ~DepartmentName, data = emp)
+
+summary(model03)$r.squared
+
+# R-squared of model03 is 0.003656944
+
+model04 <- lm(AbsentHours ~StoreLocation, data = emp)
+
+summary(model04)$r.squared
+
+# R-squared of model04 is 0.004578336
+
+model05 <- lm(AbsentHours ~Division, data = emp)
+
+summary(model05)$r.squared
+
+# R-squared of model05 is 0.001522046
+
+model06 <- lm(AbsentHours ~BusinessUnit, data = emp)
+
+summary(model06)$r.squared
+
+# R-squared of model06 is 0.001057944
+
+model07 <- lm(AbsentHours ~Age, data = emp)
+
+summary(model07)$r.squared
+
+# R-squared of model07 is 0.6833127
+
+model08 <- lm(AbsentHours ~LengthService, data = emp)
+
+summary(model08)$r.squared
+
+# R-squared of model08 is 0.0005958677
+
+model09 <- lm(AbsentHours ~EmployeeSector, data = emp)
+
+summary(model09)$r.squared
+
+# R-squared of model09 is 0.001376249
+
+model10 <- lm(AbsentHours ~EmployeeType, data = emp)
+
+summary(model10)$r.squared
+
+# R-squared of model10 is 0.001526995
+
+model11 <- lm(AbsentHours ~AbsHrsPerTenure, data = emp)
+
+summary(model11)$r.squared
+
+# R-squared of model11 is 0.1665376
+
+# * From the obtained result we can see that the ] variable that has the highest impact on response variable is (Age),
+
+##########
+# Now, we will run a model with all variables.
+
+model12 <- lm(AbsentHours ~., data = emp)
+
+#############
+
+# After computing the models, we will create a new dataset to impelement our First model based on the variables that we saw a high impact on them.
 
 PredData <- emp
 
@@ -292,13 +372,17 @@ PredData = subset(PredData, select = -c(DepartmentName, Division) )
 
 # DepartmentName: Becuase it is related to the JubTitle, therefore, if we include it in the model a multicolieanerity problem will rise.
 
+# *Note:  we can do the oppeste but we will do it this way at the moment until we find our optimal model.
+
 # Division: Becuase it is related to the BusinessUnit, therefore, if we include it in the model a multicolieanerity problem will rise.
 
+# *Note:  we can do the oppeste but we will do it this way at the moment until we find our optimal model.
 
-model01 <- lm(AbsentHours ~., data = PredData)
+
+model13 <- lm(AbsentHours ~., data = PredData)
 anova(model01)
 
-# According to our ANOVA table it is clear that all of our variables are significant based on P-value test approach.
+# According to the results optained using this model, it shows that there is some NA values, to reduce them to minimum, we will try some advanced methods of modeling.
 
 
 ###################################
@@ -317,17 +401,19 @@ BackwardData <- emp
 
 # BackwardData represent the data that we are going to use to impelemente our model using backward elemination method.
 
-Model02 <- lm(AbsentHours ~., data = BackwardData)
+Model14 <- lm(AbsentHours ~., data = BackwardData)
 
-Model02 <- step(Model02, direction = "backward", trace=FALSE ) 
+Model14 <- step(Model14, direction = "backward", trace=FALSE ) 
+
+# As we can see, after using Backward Elemination method, the problem of NA values has been solved.
 
 #Now, we will view the results of Backward elemination regression
 
-Model02$anova
+Model14$anova
 
-#Finally, we will view our final model of backward elemination method.
+#Finally, we will view our model of backward elemination method.
 
-Model02$coefficients
+Model14$coefficients
 
 #####################################
 
@@ -347,29 +433,32 @@ intercept_only <- lm(AbsentHours~ 1, data=Stipwisedata)
 
 #Secondly, we will define a model with all predictors
 
-model04 <- lm(AbsentHours ~ ., data=Stipwisedata)
+model15 <- lm(AbsentHours ~ ., data=Stipwisedata)
 
 
 # Finally, we wil perform forward stepwise regression
 
-forwardModel <- step(intercept_only, direction='forward', scope=formula(model04), trace=0)
+Model16 <- step(intercept_only, direction='forward', scope=formula(model15), trace=0)
+
+# As we explained in the model of Backward elimination, also, after impilementing Forward Stepwise regression the problem of NA values has been solved.
 
 #Now, we will view the results of forward stepwise regression
 
-forwardModel$anova
+Model16$anova
 
 #At the end, we will view our final model of forward stepwise method.
 
-forwardModel$coefficients
+Model16$coefficients
 
 
 ##################################################
 
-# As we can see, using these two approaches (Backward elemination, Forward stepwise), we got the same results!. Therefore, our optimal model will be with the coffecients given below:
+# As we can see, using these two approaches (Backward elemination, Forward stepwise), we got the same results!. Therefore, our optimal model will be either Backward elemination or Forward stepwise with the coffecients showing in the ANOVA table.
 
 
 
-# To be continue........ :)
+# To be continued........ :)
+```
 ```
 
 ------------------------------------------------------------------------
