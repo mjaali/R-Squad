@@ -10,11 +10,11 @@ output:
 
 ### Notes & Remarks
 
-This r markdown project is the work of group 04 students undertaking the course *MIS-341 : Introduction to Data Analytics* in **King Fahad University of Petroleum and Minerals** within KFUPM Business school department
+This r markdown project is the work of _**group 04**_ students undertaking the course __*MIS-341 : Introduction to Data Analytics*__ in **King Fahad University of Petroleum and Minerals** within KFUPM Business school department
 
 -   Kindly press ***`Ctrl + Shift + O`*** to quickly browse through the code
--   all the codes are commented, to undo this effect: kindly select the codes in the chunks and press ***`Ctrl + Shift + C`***
--   This project is covered in a highly detailed manner, kindly visit our github repository to get the full in-depth resources of the project [Github](https://github.com/mjaali/R-Squad)
+-   All the codes are commented, to undo this effect: kindly select the codes in the chunks and press ***`Ctrl + Shift + C`***
+-   This project is covered in a highly detailed manner, kindly visit our github repository to get the full in-depth resources of the project [Github](https://github.com/mjaali/R-Squad), it includes the `README` file that has a wider point of view coverage of the case
 
 # Setting the resources
 
@@ -69,9 +69,11 @@ library(tidyverse); library(writexl); library(readxl); library(scales); library(
 # Mohammed Alquraini:
 
 #'[ Setting the Directory
-setwd( dir = "C:\\Users\\Lenovo\\Documents\\MIS431- Project\\")
+# setwd( dir = "C:\\Users\\Lenovo\\Documents\\MIS431- Project\\")
 #'[ Loading the File
-AbsEmployees <- read_excel("../MIS431- Project/AbsEmployees.xlsx", sheet = 1)
+AbsEmployees <- read_excel("./1. input/AbsEmployees.xlsx", sheet = 1)
+
+
 
 ####
 # # Loading file - github fetch version
@@ -147,6 +149,9 @@ emp <- emp %>%
 emp <- emp[!duplicated(emp$dup), ]
 # deleting excess columns
 emp <- subset(emp, select = -c(dup))
+
+
+
 ```
 
 ## Data Wrangling
@@ -155,33 +160,35 @@ In this part, we are concerned with any manipulation required in order to improv
 
 -   **AbsHoursPerTenure** : This variable will be our dependent variable, the feature that is already existent in the data only accounts for the absent hours, regardless of the years of tenure. Since it is not statistically feasible to compare the absence of multiple employees with different tenures, it was decided to make a new variable that will take the proportional absence hours per year of service.
 
--   **StoreType** : Store Types are classified into 3 types of stores. If a customer service manager exsists and more than 40 cashoiers
-
--   **Probable_Gender_By_Given_Name** : is a fetched from an extername names database to cross-check data quality.
-
 -   **EmployeeType** : This new variable will identify which type of employee we are studying, are they a working employee as a cashier or a back-end employee as a finance staff, this will help us identify which employee we can't afford to go absent
 
 -   **EmployeeSector** : This variable will help us identify absenteeism based on the sector the employee works in, it answers the question of "Are finance employees more likely to go absent in comparison to HR employees?".
 
 ```{r}
-# creating a proportional Absence hours per year in the company
+# (1) creating a proportional Absence hours per year in the company
 emp$'AbsHrsPerTenure'   <- (emp$AbsentHours/emp$LengthService)
-# adding a store type variable
-# adding a Probable_Gender_By_Given_Name variable
-# adding a variable identifying the type of employee
+
+
+
+# (3) adding a variable identifying the type of employee
 emp$EmployeeType <- if_else( emp$JobTitle %in% c("Cashier", "Produce Clerk", "Shelf Stocker", "Dairy Person", "Meat Cutter", "Baker"), "Working Employee",
                              if_else(emp$JobTitle %in% c("Store Manager", "Customer Service Manager", "Produce Manager", "Processed Foods Manager", "Dairy Manager", "Meats Manager", "Bakery Manager"), "Work-Manager Employee",
                                      if_else(emp$JobTitle %in% c("Auditor", "Investment Analyst", "Accounting Clerk", "Accounts Payable Clerk", "Accounts Receiveable Clerk", "Trainer", "Compensation Analyst", "Labor Relations Analyst", "Recruiter", "Benefits Admin", "HRIS Analyst", "Systems Analyst", "Corporate Lawyer"), "Staff Employee",
                                              if_else(emp$JobTitle %in% c("Director, Audit", "Director, Investments", "Director, Accounting", "Director, Accounts Payable", "Director, Accounts Receivable", "Director, Training", "Director, Compensation", "Director, Labor Relations", "Director, Recruitment", "Director, Employee Records", "Director, HR Technology"), "Staff-Manager Employee",
                                                      if_else(emp$JobTitle %in% c("VP Finance", "Exec Assistant, Finance", "VP Human Resources", "Exec Assistant, Human Resources", "Exec Assistant, Human Resources", "VP Stores", "Exec Assistant, VP Stores", "CIO", "CEO", "Legal Counsel", "Exec Assistant, Legal Counsel", "CHief Information Officer" ), "Executive Employee",
                                                              emp$JobTitle)))))
-# adding a unit categorizing the division of the employee
+
+
+
+# (3) adding a unit categorizing the division of the employee
 emp$EmployeeSector <- if_else(emp$JobTitle %in% c("Cashier", "Produce Clerk", "Shelf Stocker", "Dairy Person", "Meat Cutter", "Baker", "Store Manager", "Customer Service Manager", "Produce Manager", "Processed Foods Manager", "Dairy Manager", "Meats Manager", "Bakery Manager"), "Stores Sector",
                       if_else(emp$JobTitle %in% c("Trainer", "Compensation Analyst", "Labor Relations Analyst", "Recruiter", "Benefits Admin", "HRIS Analyst", "Systems Analyst", "Corporate Lawyer", "Director, Training", "Director, Compensation", "Director, Labor Relations", "Director, Recruitment", "Director, Employee Records", "Director, HR Technology"), "Human Resources Sector",
                               if_else(emp$JobTitle %in% c("Auditor", "Investment Analyst", "Accounting Clerk", "Accounts Payable Clerk", "Accounts Receiveable Clerk", "Director, Audit", "Director, Investments", "Director, Accounting", "Director, Accounts Payable", "Director, Accounts Receivable"), "Finance Sector",
                                       "Chief/BoD")))
-unique(emp$Sector)
-unique(emp$EmployeeType)
+
+
+
+
 ```
 
 ## Data Classification
@@ -193,17 +200,20 @@ Additionally, we will ensure data variables represent their correct data types. 
 ```{r}
 # removing excess variables and re-ordering the data
 emp <- emp %>% 
-  select(, "EmployeeSector", "EmployeeType", "Gender", "JobTitle", "DepartmentName", "Division", "BusinessUnit", "StoreLocation", "Age", "LengthService", "AbsentHours", "AbsHrsPerTenure" )
-# assiging the correct data types
-glimpse(emp)
+  select(, "EmployeeNumber", "EmployeeSector", "EmployeeType", "Gender", "JobTitle", "DepartmentName", "Division", "BusinessUnit", "StoreLocation", "Age", "LengthService", "AbsentHours", "AbsHrsPerTenure" )
+
+# assigning the correct data types
 emp$EmployeeSector <- as.factor(emp$EmployeeSector)
 emp$EmployeeType <- as.factor(emp$EmployeeType)
 emp$Gender <- as.factor(emp$Gender)
 emp$DepartmentName <- as.factor(emp$DepartmentName)
 emp$Division <- as.factor(emp$Division)
 emp$BusinessUnit <- as.factor(emp$BusinessUnit)
+
 # the rest of the variables are correctly assigned (as intended)
-glimpse(emp)
+
+
+
 ```
 
 with the above codes in place, we have prepared our data for analysis. we explored the data for potential incorrect entries, we examined and removed any observation to another data set `empR`. additionally, we cleaned our main data set, added new variables to be studied, assigned the correct data types and ensured the data will function properly using r language statistical predictive models. `emp` is ready-for-analysis, and we will proceed to the next part of the report were we clarify how we will conduct our analysis to find the most influencial factors relating to employee absenteeism.
@@ -212,14 +222,108 @@ with the above codes in place, we have prepared our data for analysis. we explor
 
 # Analysis
 
+After we cleaned the data set, we commenced to the next segment in our project, which is the analysis of the data. the goal of the project is to identify factors that are most effective to absenteeism in the company, highlight them and offer our business recommendations on how to reduce them. Firstly, to reach that conclusion, we will do a descriptive analysis to understand what is currently happening. Secondly, we will use our findings from the descriptive analysis and conduct our predictive analysis to objectively project what will most likely to happen if we were to go through our recommendations. 
+
+
+
 ## Descriptive Statistics
+
+In this segment of the project we will attempt to explore the data, and find correlations in our variables given. From this analysis, we will identify phenomenons and patterns that will justify the absenteeism causes within the company.
+
+
+
+
+### Absenteeism and Length service
+
+We wanted to test link between the connection between how long an employee has served the company and the absenteesim rate they have. The logic behind this is the fact that if someone served more in the company, are they more likely or less likely to go absent?
+
+```{r}
+
+
+#'* a graph that shows the link between Length Service & AbsHrsPerTenure *
+
+#'[ A graph shows the results regardless of the business unit
+emp %>%
+  ggplot() +
+  aes(x=LengthService, y=AbsHrsPerTenure) +             # naming the x,y axis
+  geom_point(colour = "violet") +                       # Coloring the dots in the graph
+  coord_cartesian(xlim = c(0, 40), ylim = c(0, 100)) +  # setting limits to x,y axis (if we keep the outliers, the graph will be so big that we can't see the relationship)
+  theme_minimal()                                       # the theme/style of the plot
+
+
+#'[ A graph shows the results for Stores business unit
+emp %>%
+  filter(, BusinessUnit == "Stores") %>% 
+  ggplot() +
+  aes(x=LengthService, y=AbsHrsPerTenure) +             # naming the x,y axis
+  geom_point(colour = "red") +                          # Coloring the dots in the graph
+  coord_cartesian(xlim = c(0, 40), ylim = c(0, 100)) +  # setting limits to x,y axis (if we keep the outliers, the graph will be so big that we can't see the relationship)
+  theme_minimal()                                       # the theme/style of the plot
+
+
+
+#'[ A graph shows the results for Headoffice business unit
+emp %>%
+  filter(, BusinessUnit == "HeadOffice") %>% 
+  ggplot() +
+  aes(x=LengthService, y=AbsHrsPerTenure) +             # naming the x,y axis
+  geom_point(colour = "blue") +                         # Coloring the dots in the graph
+  coord_cartesian(xlim = c(0, 40), ylim = c(0, 100)) +  # setting limits to x,y axis (if we keep the outliers, the graph will be so big that we can't see the relationship)
+  theme_minimal()                                       # the theme/style of the plot
+
+
+
+```
+
+>findings
+
+we can observe from the above graphs a great that there is a link between length service and absenteeism. the **purple graph** shows the overall relationship between absent hours per tenure for `all employees`. We observed a pattern and decided to do a deep dive as per business unit, and our findings were informative. the **red graph** shows the same graph but uniquely to `stores`,  and the **blue graph** shows the relationship for `head office` employees. 
+
+we can summize from the graphs that for stores employees, they clutter absenteeism early service years, around 0 ~ 10 years of service. Whereas head office employees distribute their absences over their years service. This information is crucial because it gave us a new point of view to observe patterns, now we are considering the absenteeism culture over the whole business unit. Addtionally, we will start to deep dive the importance of absences in Stores unit. We will do analysis on who we deem most important to not be absent. For example, if a high number of `Cashiers` go absent, customers will bottleneck on checkout, jeopardizing the in-store customer experience of the store.
+
+
+### Absenteeism and Age 
+
+The one the most logical correlations is the age of the employee and how it affects the absenteeism rate they incur. This analysis answers the questions of _"Is the employee more likely to be absent the older they are? does age affect absenteeism?"_
+
+```{r}
+
+#'* a graph that shows the link between Age and Absence Hours Per Tenure                                                                                                                                       *
+
+
+#'[ A graph shows the results for the relationship between age & absHrsPerTenure
+emp %>%
+  ggplot() +
+  geom_point(aes(x = Age,y = AbsHrsPerTenure), colour = "purple") + # setting the aesthetics for the points + defining xy axis
+  coord_cartesian(xlim = c(15, 60), ylim = c(0, 100)) +             # limiting the xy axis
+  theme_minimal()                                                   # setting the theme for the graph
+
+
+
+#'[ A graph shows the results for the relationship between age & absHrsPerTenure
+emp %>%
+  ggplot() +
+  geom_point(aes(x = Age,y = AbsHrsPerTenure), colour = "green") +    # setting the aesthetics for the points + defining xy axis
+  coord_cartesian(xlim = c(15, 60), ylim = c(-20, 100)) +             # limiting the xy axis
+  geom_smooth(aes(x = Age,y = AbsHrsPerTenure) ,method = 'lm') +      # drawing a linear model line in the graph
+  theme_minimal()                                                     # setting the theme for the graph
+
+
+
+```
+
+
+> findings
+
+the findings of these graphs will shape our decision for the report. We can observe a very interesting phenomena when plotting age and absence hours per tenure, the graph shows how the absence hours per tenure increases referring to the age. Starting approximately the age 25, absenteeism increases around 0.9 hours. With this observation we can deduce that as for now, this is the strongest correlation we were able to find thus far. We will keep this graph in mind whilst making our recommendation, as well as explore it in the point of view of its effects per job title.
+
 
 ## Predictive Statistics
 
 ```{r}
 ##################
 
-#Firstly, We will do our correlation matrix to detirmine the correlation between the independent variables and our respons variable, but since our data contain numirc and nonnumirc variable, we will do the correlation matrix manually.
+#Firstly, We will do our correlation matrix to determine the correlation between the independent variables and our response variable, but since our data contain numeric and nonnumerical variable, we will do the correlation matrix manually.
 
 # Note* 
 #   We have selected our respond variable to be AbsentHours.
@@ -252,13 +356,13 @@ cor(m_V1, m_V10)
 cor(m_V1, m_V11)
 cor(m_V1, m_V12)
 
-# After computing the correlation between our response variable and other variables, we will do tests of the correlations between some variables to test our assumptions of having multycolinearity between some variables.
+# After computing the correlation between our response variable and other variables, we will do tests of the correlations between some variables to test our assumptions of having multicolinearity between some variables.
 
 # First test will be between BusinessUnit and Division.
 
 cor(m_V6, m_V7) 
 
-# As we can see, we have a significant 100% correlation between DivisionStores and (BusinessUnitHeadOffice and BusinessUnitStores), which is indecates that the presence of the two variables in our model will result in a multyculinearity issues.
+# As we can see, we have a significant 100% correlation between DivisionStores and (BusinessUnitHeadOffice and BusinessUnitStores), which is indicates that the presence of the two variables in our model will result in a multicolinearity issues.
 # Therefore, our optimal solution is to remove one of the two variables.
 
 #############
@@ -267,17 +371,17 @@ cor(m_V6, m_V7)
 
 cor(m_V3, m_V4)
 
-# Based on the optained results, we can conclude that the precense of these two variables will create a problem of multicolinearity, due to the high correlation (more than95%) between some of the observations.
+# Based on the obtained results, we can conclude that the presence of these two variables will create a problem of multicolinearity, due to the high correlation (more than95%) between some of the observations.
 
 # Therefore, our optimal solution is to remove one of the two variables.
 
 
 #############
-# For the other variables, there is  no need for testing the correlation between them, due to that it seems that there is no significant correlation between them, but if a high correlation was precent, R will find it and solve the problem.
+# For the other variables, there is  no need for testing the correlation between them, due to that it seems that there is no significant correlation between them, but if a high correlation was percent, R will find it and solve the problem.
 
 ########################
 
-# After computing the correlation matrix, we will try to run models for each variable to detirmine which variable has the highest impact.
+# After computing the correlation matrix, we will try to run models for each variable to determine which variable has the highest impact.
 
 # for our individuals model we will use (emp) as our dataset.
 
@@ -358,7 +462,7 @@ model12 <- lm(AbsentHours ~., data = emp)
 
 #############
 
-# After computing the models, we will create a new dataset to impelement our First model based on the variables that we saw a high impact on them.
+# After computing the models, we will create a new dataset to implement our First model based on the variables that we saw a high impact on them.
 
 PredData <- emp
 
@@ -367,14 +471,14 @@ PredData <- emp
 
 PredData = subset(PredData, select = -c(DepartmentName, Division) )
 
-# We have deleted the listed variables to impelement our first model because of the below reasons:
+# We have deleted the listed variables to implement our first model because of the below reasons:
 
 
-# DepartmentName: Becuase it is related to the JubTitle, therefore, if we include it in the model a multicolieanerity problem will rise.
+# DepartmentName: Because it is related to the JobTitle, therefore, if we include it in the model a multicolinearity problem will rise.
 
 # *Note:  we can do the oppeste but we will do it this way at the moment until we find our optimal model.
 
-# Division: Becuase it is related to the BusinessUnit, therefore, if we include it in the model a multicolieanerity problem will rise.
+# Division: Becuase it is related to the BusinessUnit, therefore, if we include it in the model a multicolinearity problem will rise.
 
 # *Note:  we can do the oppeste but we will do it this way at the moment until we find our optimal model.
 
@@ -459,9 +563,9 @@ Model16$coefficients
 
 # To be continued........ :)
 ```
-```
 
 ------------------------------------------------------------------------
 
-# Recommendation
 
+# Recommendation
+The Cashier has the highest Absinteesm Culture level. In the city of Vancouver, the age `24.51` y/o and beyond is where Absenteeism hours escalate with a strong correlation for both males and females at a `slope of 0.9395x`. Since our x-intercept is `24.51`, or in other words, Cashiers below the age of 24.51 have no absinteesm hours `(0 Hrs / year)`. The avg. tenure of the Cashier is `4.58 years`. A policy to hire Cashiers of a maximum of `20 y/o` will ensure most cashiers will clear out of the company before they turn 25 and reduce overall company absenteeism significantly. However, we have to validate if these young cashiers are full-time or part-time in order to control the cost associated with high-frequancy and high-volume recruting, plus investigate the compensation increase as a result, along with the total supply of such type of workers.
