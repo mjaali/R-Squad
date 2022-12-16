@@ -54,9 +54,9 @@ library(tidyverse); library(writexl); library(readxl); library(scales); library(
 #AbsEmployees <- read_excel("../MIS341-02_Group 4/1. input/AbsEmployees.xlsx", sheet = 1)
 # Mohammed Alquraini:
 #'[ Setting the Directory
-setwd( dir = "C:\\Users\\Lenovo\\Documents\\MIS431- Project\\")
+# setwd( dir = "C:\\Users\\Lenovo\\Documents\\MIS431- Project\\")
 #'[ Loading the File
-AbsEmployees <- read_excel("../MIS431- Project/AbsEmployees.xlsx", sheet = 1)
+AbsEmployees <- read_excel("../MIS341-02_Group 4/1. input/AbsEmployees.xlsx", sheet = 1)
 ####
 # # Loading file - github fetch version
 # setwd( dir = "/Users/mjaali/webapps/R-Squad/Assets/");
@@ -256,272 +256,21 @@ emp %>%
 
 
 > findings
+
+
 the findings of these graphs will shape our decision for the report. We can observe a very interesting phenomena when plotting age and absence hours per tenure, the graph shows how the absence hours per tenure increases referring to the age. Starting approximately the age 25, absenteeism increases around 0.9 hours. With this observation we can deduce that as for now, this is the strongest correlation we were able to find thus far. We will keep this graph in mind whilst making our recommendation, as well as explore it in the point of view of its effects per job title.
 
 
+---------------------------------------------------------------------
 ## Predictive Statistics
 
-##Here we will try to build our model using AbsentHours to be our dependent variable.
+Here we will try to build our model using AbsentHours to be our dependent variable.
 
----------------------------------------------------------------------
 
-##Firstly, We will do our correlation matrix to determine the correlation between the independent variables and our response variable, but since our data contain numeric and nonnumerical variable, we will do the correlation matrix manually.
+Firstly, We will do our correlation matrix to determine the correlation between the independent variables and our response variable, but since our data contain numeric and nonnumerical variable, we will do the correlation matrix manually.
 
-##The first step will be defining the model matrix for each variable
-```{r}
-m_V1 <- model.matrix(~ AbsentHours - 1, emp)
-m_V2 <- model.matrix(~ Gender - 1, emp)
-m_VJobTitle <- model.matrix(~ JobTitle - 1, emp)
-m_VDepartmentName <- model.matrix(~ DepartmentName - 1, emp)
-m_V5 <- model.matrix(~ StoreLocation - 1, emp)
-m_VDivision <- model.matrix(~ Division - 1, emp)
-m_VBusinessUnit <- model.matrix(~ BusinessUnit - 1, emp)
-m_V8 <- model.matrix(~ Age - 1, emp)
-m_V9 <- model.matrix(~ LengthService - 1, emp)
-m_V10 <- model.matrix(~ EmployeeSector - 1, emp)
-m_V11 <- model.matrix(~ EmployeeType - 1, emp)
-m_V12 <- model.matrix(~ AbsHrsPerTenure - 1, emp)
-```
-##Now we will do our correlation matrix between our response variable and other variables in the dataset.
-```{r}
-cor(m_V1, m_V2)
-cor(m_V1, m_V3)
-cor(m_V1, m_V4) 
-cor(m_V1, m_V5)
-cor(m_V1, m_V6)
-cor(m_V1, m_V7) 
-cor(m_V1, m_V8)
-cor(m_V1, m_V9)
-cor(m_V1, m_V10) 
-cor(m_V1, m_V11)
-cor(m_V1, m_V12)
+The first step will be defining the model matrix for each variable
 
-rm(m_V1, m_V2, m_V5, m_V8, m_V9, m_V10, m_V11, m_V12 )
-
-```
-##After computing the correlation between our response variable and other variables, we will do tests of the correlations between some variables to test our assumptions of having multicolinearity between some variables.
-##First test will be between BusinessUnit and Division.
-```{r}
-cor(m_VDivision, m_VBusinessUnit) 
-```
-##As we can see, we have a significant 100% correlation between DivisionStores and (BusinessUnitHeadOffice and BusinessUnitStores), which is indicates that the presence of the two variables in our model will result in a multicolinearity issues.
-##Therefore, our optimal solution is to remove one of the two variables.
-
-------------------------------------------------------------------------
-
-##Now, we will test the correlation between JubTitle and DepartmentName.
-```{r}
-cor(m_VJobTitle, m_VDepartmentName)
-```
-##Based on the obtained results, we can conclude that the presence of these two variables will create a problem of multicolinearity, due to the high correlation (more than95%) between some of the observations.
-##Therefore, our optimal solution is to remove one of the two variables
-
-----------------------------------------------------------------------------
-
-##For the other variables, there is  no need for testing the correlation between them, due to that it seems that there is no significant correlation between them, but if a high correlation was percent, R will find it and solve the problem.
-
------------------------------------------------------------------------
-##After computing the correlation matrix, we will try to run models for each variable to determine which variable has the highest impact.
-
-##for our individuals model we will use (emp) as our dataset.
-```{r}
-
-model01 <- lm(AbsentHours ~Gender, data = emp)
-summary(model01)$r.squared
-# R-squared of model1 is 0.01436839
-
-model02 <- lm(AbsentHours ~JobTitle, data = emp)
-summary(model02)$r.squared
-# R-squared of model02 is 0.006038185
-
-model03 <- lm(AbsentHours ~DepartmentName, data = emp)
-summary(model03)$r.squared
-# R-squared of model03 is 0.003656944
-
-model04 <- lm(AbsentHours ~StoreLocation, data = emp)
-summary(model04)$r.squared
-# R-squared of model04 is 0.004578336
-
-model05 <- lm(AbsentHours ~Division, data = emp)
-summary(model05)$r.squared
-# R-squared of model05 is 0.001522046
-
-model06 <- lm(AbsentHours ~BusinessUnit, data = emp)
-summary(model06)$r.squared
-# R-squared of model06 is 0.001057944
-
-model07 <- lm(AbsentHours ~Age, data = emp)
-summary(model07)$r.squared
-# R-squared of model07 is 0.6833127
-
-model08 <- lm(AbsentHours ~LengthService, data = emp)
-summary(model08)$r.squared
-# R-squared of model08 is 0.0005958677
-
-model09 <- lm(AbsentHours ~EmployeeSector, data = emp)
-summary(model09)$r.squared
-# R-squared of model09 is 0.001376249
-
-model10 <- lm(AbsentHours ~EmployeeType, data = emp)
-summary(model10)$r.squared
-# R-squared of model10 is 0.001526995
-
-model11 <- lm(AbsentHours ~AbsHrsPerTenure, data = emp)
-summary(model11)$r.squared
-# R-squared of model11 is 0.1665376
-
-
-rm(model01, model02, model03, model04, model05, model06, model07, model08, model09, model10, model11)
-
-```
-##From the obtained result we can see that the variable that has the highest impact on our response variable is (Age),
-
----------------------------------------------------------------------------
-
-##Now, we will run a model with all variables.
-
-```{r}
-
-model12 <- lm(AbsentHours ~., data = emp)
-
-summary(model12)$r.squared
-
-
-rm(model12)
-```
-
-## As we can obsirve, R-squared for the full model came out to be 0.7407666
-
-
-##After computing the models, we will create a new dataset to implement our First model based on the variables that we beleive it has an impact on our respond variable.
-
-
-
-##*(PredData)* refer to the data that we are going to use in building our new model.
-```{r}
-PredData <- emp
-
-PredData = subset(PredData, select = -c(DepartmentName, Division) )
-```
-##We have deleted the listed variables to implement our first model because of the below reasons:
-##*DepartmentName:* Because it is related to the JobTitle, therefore, if we include it in the model a multicolinearity problem will rise.
-
-##*Note:*  we can do the oppeste but we will do it this way at the moment until we find our optimal model.
-
-##*Division:* Becuase it is related to the BusinessUnit, therefore, if we include it in the model a multicolinearity problem will rise.
-
-##*Note:*  we can do the oppeste but we will do it this way at the moment until we find our optimal model.
-
-```{r}
-model13 <- lm(AbsentHours ~., data = PredData)
-anova(model13)
-
-summary(model13)$r.squared
-
-rm(model13)
-
-```
-##According to the results optained using this model, it shows that there is a variable (EmployeeNumber) which is insignificant at alpha = 0.05, which result in some NA values.
-
-# R-squared is 0.7407666
----------------------------------------------------------------------
-
-## Now, we will try some advanced methods for building our optimal model, listed below:
-
-## 1- Backward elemenation
-## 2- Forward Stepwise
-
-------------------------------------------------------------------------
-
-# Backward elemination method:
-
-##*BackwardData* represent the data that we are going to use to impelemente our model using backward elemination method.
-
-##*BackwardModel* represent our model using backward elemination method
-
-```{r}
-BackwardData <- emp
-
-BackwardModel <- lm(AbsentHours ~., data = BackwardData)
-BackwardModel <- step(BackwardModel, direction = "backward", trace=FALSE ) 
-
-
-#we will view our model of backward elemination method.
-BackwardModel$coefficients
-
-anova(BackwardModel)
-
-summary(BackwardModel)$r.squared
-
-
-```
-##As we can see, after using Backward Elemination method, we have define six variables to be in our model and all of them are significant at alpha = 0.05
-
-# R-squared is 0.7391996
-----------------------------------------------------------------------
-
-## Here, we will use Forward stepwise regression method
-
-
-#Forward stepwise method
-
-##*Stipwisedata* represent the data that we are going to use to impelemente our model using Forward stepwise method.
-
-## To impelement our forward stipwise method we should folow the folowing steps:
-
-##1- we will define our intercept-only model
-##2- we will define a model with all predictors
-##3- we wil perform forward stepwise regression
-
-```{r}
-
-Stipwisedata <- emp
-
-intercept_only <- lm(AbsentHours~ 1, data=Stipwisedata)
-#Secondly, we will define a model with all predictors
-FullModel <- lm(AbsentHours ~ ., data=Stipwisedata)
-# Finally, we wil perform forward stepwise regression
-StipwiseModel <- step(intercept_only, direction='forward', scope=formula(FullModel), trace=0)
-
-#Now, we will view the results of forward stepwise regression
-anova(StipwiseModel)
-
-summary(StipwiseModel)$r.squared
-```
-
-## Using forward Stepwise method, we have obtained five variables to be used for our model, but one of these variables (LengthService) is insignificant at alpha = 0.05, therefore, it will be dropped from the model and use just the other four variables which are (Age, Gender, AbsHrsPerTenure, JobTitl).
-
-```{r}
-
-StipwiseModel <- lm(AbsentHours ~ (Age +Gender+ AbsHrsPerTenure+ JobTitle), data = emp)
-
-anova(StipwiseModel)
-
-summary(StipwiseModel)$r.squared
-
-```
-
-# After deleting the insignificant variable, the model become significant and can be used in our regression.
-
-# R-squared is 0.7391996
-
-----------------------------------------------------------------------------
-
-## As we can see, using these two approaches (Backward elemination, Forward stepwise), we got the same results for the R-squared approach!. Therefore, our optimal model using (AbsentHours) as a response variable will be the model that was obtained using Forward stepwise approach, due to that it has lower number of variables than Backward Elimination approach with the same coffetiont of determinition.
-
-# The model is shown below:
-
-
-# To be continued........ :)
-
-####################################
-
-
--------------------------------------------------------------------
-##Now, we will try to build our model using AbsHrsPerTenure to be our dependent variable.
-
-
-##Firstly, We will do our correlation matrix to determine the correlation between the independent variables and our response variable, but since our data contain numeric and nonnumerical variable, we will do the correlation matrix manually.
 ```{r}
 
 m_V13 <- model.matrix(~ AbsHrsPerTenure - 1, emp)
@@ -536,9 +285,13 @@ m_V21 <- model.matrix(~ LengthService - 1, emp)
 m_V22 <- model.matrix(~ EmployeeSector - 1, emp)
 m_V23 <- model.matrix(~ EmployeeType - 1, emp)
 m_V24 <- model.matrix(~ AbsentHours - 1, emp)
+
+
 ```
 
-##Now we will do our correlation matrix between our response variable and other variables in the dataset.
+
+- Now we will do our correlation matrix between our response variable and other variables in the dataset.
+
 
 ```{r}
 
@@ -557,37 +310,45 @@ cor(m_V13, m_V24)
 rm(m_V13, m_V14, m_V17, m_V20, m_V21, m_V22, m_V23, m_V24 )
 
 ```
-##After computing the correlation between our response variable and other variables, we will do tests of the correlations between some variables to test our assumptions of having multicolinearity between some variables.
 
------------------------------------------------------------------------------
 
-##First test will be between BusinessUnit and Division.
+- After computing the correlation between our response variable and other variables, we will do tests of the correlations between some variables to test our assumptions of having multicolinearity between some variables.
+
+
+First test will be between BusinessUnit and Division.
+
+
 ```{r}
 
 cor(m_VDivision, m_VBusinessUnit) 
 
 ```
-##As we can see, we have a significant 100% correlation between DivisionStores and (BusinessUnitHeadOffice and BusinessUnitStores), which is indicates that the presence of the two variables in our model will result in a multicolinearity issues.
-##Therefore, our optimal solution is to remove one of the two variables.
 
-------------------------------------------------------------------------------
 
-##Now, we will test the correlation between JubTitle and DepartmentName.
+As we can see, we have a significant 100% correlation between DivisionStores and (BusinessUnitHeadOffice and BusinessUnitStores), which is indicates that the presence of the two variables in our model will result in a multicolinearity issues.
+Therefore, our optimal solution is to remove one of the two variables.
+
+
+Now, we will test the correlation between JubTitle and DepartmentName.
+
+
 ```{r}
 
 cor(m_VJobTitle, m_VDepartmentName)
+
+
 ```
-##Based on the obtained results, we can conclude that the presence of these two variables will create a problem of multicolinearity, due to the high correlation (more than95%) between some of the observations.
-##Therefore, our optimal solution is to remove one of the two variables.
 
-------------------------------------------------------------------------------
-##For the other variables, there is  no need for testing the correlation between them, due to that it seems that there is no significant correlation between them, but if a high correlation was percent, R will find it and solve the problem.
 
-------------------------------------------------------------------------------
+Based on the obtained results, we can conclude that the presence of these two variables will create a problem of multicolinearity, due to the high correlation (more than95%) between some of the observations.
+Therefore, our optimal solution is to remove one of the two variables.
 
-##After computing the correlation matrix, we will try to run models for each variable to determine which variable has the highest impact.
+For the other variables, there is  no need for testing the correlation between them, due to that it seems that there is no significant correlation between them, but if a high correlation was percent, R will find it and solve the problem.
 
-##for our individuals model we will use (emp) as our dataset.
+
+After computing the correlation matrix, we will try to run models for each variable to determine which variable has the highest impact.
+
+for our individuals model we will use (emp) as our dataset.
 
 ```{r}
 
@@ -640,11 +401,12 @@ rm(model17, model18, model19, model20, model21, model22, model23, model24, model
 
 ```
 
-##From the obtained result we can see that the variable that has the highest impact on response variable is *AbsentHours* then *Age*.
+From the obtained result we can see that the variable that has the highest impact on response variable is *AbsentHours* then *Age*.
 
-----------------------------------------------------------------------------
 
-##Now, we will run a model with all variables.
+Now, we will run a model with all variables.
+
+
 ```{r}
 model28 <- lm(AbsHrsPerTenure ~., data = emp)
 
@@ -653,28 +415,28 @@ summary(model28)$r.squared
 rm(model28)
 
 ```
-## As it is shown the R-squared for the full model is very small, therefore, our response variable for this regression may not be ideal.
 
-##After computing the models, we will create a new dataset to implement our First model based on the variables that we beleive they have a high impact on our respond variable
+As it is shown the R-squared for the full model is very small, therefore, our response variable for this regression may not be ideal.
 
-##*(PredData2)* refer to the data that we are going to use in building our new model.
+After computing the models, we will create a new dataset to implement our First model based on the variables that we beleive they have a high impact on our respond variable
+
+*(PredData2)* refer to the data that we are going to use in building our new model.
 
 ```{r}
 
 PredData2 <- emp
 
 PredData2 = subset(PredData2, select = -c(DepartmentName, Division) )
+
 ```
 
-##We have deleted the listed variables to implement our first model because of the below reasons:
+We have deleted the listed variables to implement our first model because of the below reasons:
 
-##*DepartmentName:* Because it is related to the JobTitle, therefore, if we include it in the model a multicolinearity problem will rise.
+*DepartmentName:* Because it is related to the JobTitle, therefore, if we include it in the model a multicolinearity problem will rise.
+*Note:*  we can do the oppeste but we will do it this way at the moment until we find our optimal model.
+*Division:* Becuase it is related to the BusinessUnit, therefore, if we include it in the model a multicolinearity problem will rise.
+*Note:*  we can do the oppeste but we will do it this way at the moment until we find our optimal model.
 
-##*Note:*  we can do the oppeste but we will do it this way at the moment until we find our optimal model.
-
-##*Division:* Becuase it is related to the BusinessUnit, therefore, if we include it in the model a multicolinearity problem will rise.
-
-##*Note:*  we can do the oppeste but we will do it this way at the moment until we find our optimal model.
 
 ```{r}
 
@@ -689,28 +451,27 @@ rm(model29)
 
 ```
 
-##According to the results optained using this model, it shows that there are some variables that are insignificant, As a result, some observasions are having NA values, to reduce them to minimum, we will try some advanced methods of modeling.
+According to the results optained using this model, it shows that there are some variables that are insignificant, As a result, some observasions are having NA values, to reduce them to minimum, we will try some advanced methods of modeling.
 
---------------------------------------------------------------------------
-##Now, we will try some advanced methods for building our optimal model, listed below:
+Now, we will try some advanced methods for building our optimal model, listed below:
 
-## 1- Backward elemenation
-## 2 - Forward Stepwise
+1- Backward elemenation
+2 - Forward Stepwise
 
-------------------------------------------------------------------------
 
-# Backward elemination method:
+Backward elemination method:
 
-##*BackwardData2* represent the data that we are going to use to impelemente our model using backward elemination method.
+*BackwardData2* represent the data that we are going to use to impelemente our model using backward elemination method.
+
 ```{r}
 
 BackwardData2 <- emp
 BackwardModel2 <- lm(AbsHrsPerTenure ~., data = BackwardData2)
 BackwardModel2 <- step(BackwardModel2, direction = "backward", trace=FALSE ) 
 
-#Now, we will view the results of Backward elemination regression
+#Now, we will view the results of Backward elimination regression
 anova(BackwardModel2)
-#Finally, we will view our model of backward elemination method.
+#Finally, we will view our model of backward elimination method.
 BackwardModel2$coefficients
 
 
@@ -719,23 +480,22 @@ summary(BackwardModel2)$r.squared
 
 ```
 
-##As we can see, after using Backward Elemination method, our observations has been reduce to four, also, one of these for is insignificant (JobTitle) based on P-value approach at alpha = 0.05.
+As we can see, after using Backward Elemination method, our observations has been reduce to four, also, one of these for is insignificant (JobTitle) based on P-value approach at alpha = 0.05.
 
-# Also, R-squared is found out to be 0.2362546
+- Also, R-squared is found out to be 0.2362546
 
-----------------------------------------------------------------------------
-## Here, we will use Forward stepwise regression method
+Here, we will use Forward stepwise regression method
 
 
-#Forward stepwise method
+Forward stepwise method
 
-##*Stipwisedata2* represent the data that we are going to use to impelemente our model using Forward stepwise method.
+*Stipwisedata2* represent the data that we are going to use to impalement our model using Forward stepwise method.
 
-##To impelement our forward stipwise method we should folow the folowing steps:
+To implement our forward stepwise method we should foمlow the folمowing steps:
 
-##1- we will define our intercept-only model
-##2- we will define a model with all predictors
-##3- we wil perform forward stepwise regression
+1- we will define our intercept-only model
+2- we will define a model with all predictors
+3- we will perform forward stepwise regression
 
 ```{r}
 
@@ -765,21 +525,24 @@ rm(PredData, PredData2, Stipwisedata, Stipwisedata2,BackwardData,BackwardData2)
      
 ```
 
-## As we can see, we have define in this model 4 variables to be added to our model, and all of them are significant at alpha = 0.05.
+ As we can see, we have define in this model 4 variables to be added to our model, and all of them are significant at alpha = 0.05.
 
-## Also, R-squared came out to be 0.2321445
-
---------------------------------------------------------------------------
-
-## As we can see, using these two approaches (Backward elemination, Forward stepwise), we gotdefferint results. Furthurmore, coffetion of determinition is very small for the two method. Therefore, our optimal model will be either Backward elemination with *AbsentHours* as a response variable or Forward stepwise with *AbsentHours* as a response variable.
-
-# Our final model will be:
+Also, R-squared came out to be 0.2321445
 
 
-```
+As we can see, using these two approaches (Backward elemination, Forward stepwise), we gotdefferint results. Furthurmore, coffetion of determinition is very small for the two method. Therefore, our optimal model will be either Backward elemination with *AbsentHours* as a response variable or Forward stepwise with *AbsentHours* as a response variable.
+
+Our final model will be:
+
+
+
 
 ------------------------------------------------------------------------
 
 
 # Recommendation
-The Cashier has the highest Absinteesm Culture level. In the city of Vancouver, the age `24.51` y/o and beyond is where Absenteeism hours escalate with a strong correlation for both males and females at a `slope of 0.9395x`. Since our x-intercept is `24.51`, or in other words, Cashiers below the age of 24.51 have no absinteesm hours `(0 Hrs / year)`. The avg. tenure of the Cashier is `4.58 years`. A policy to hire Cashiers of a maximum of `20 y/o` will ensure most cashiers will clear out of the company before they turn 25 and reduce overall company absenteeism significantly. However, we have to validate if these young cashiers are full-time or part-time in order to control the cost associated with high-frequancy and high-volume recruting, plus investigate the compensation increase as a result, along with the total supply of such type of workers. 
+The Cashier has the highest Absenteeism Culture level. In the city of Vancouver, the age `24.51` y/o and beyond is where Absenteeism hours escalate with a strong correlation for both males and females at a `slope of 0.9395x`. Since our x-intercept is `24.51`, or in other words, Cashiers below the age of 24.51 have no absenteeism hours `(0 Hrs / year)`. The avg. tenure of the Cashier is `4.58 years`. A policy to hire Cashiers of a maximum of `20 y/o` will ensure most cashiers will clear out of the company before they turn 25 and reduce overall company absenteeism significantly. However, we have to validate if these young cashiers are full-time or part-time in order to control the cost associated with high-frequency and high-volume recruiting, plus investigate the compensation increase as a result, along with the total supply of such type of workers. 
+
+
+
+
