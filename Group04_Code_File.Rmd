@@ -6,19 +6,24 @@ output:
   html_document:
     toc: true
     theme: readable
+editor_options: 
+  markdown: 
+    wrap: sentence
 ---
 
-### Notes & Remarks
+### i. Notes & Remarks
 
-This r markdown project is the work of _**group 04**_ students undertaking the course __*MIS-341 : Introduction to Data Analytics*__ in **King Fahad University of Petroleum and Minerals** within KFUPM Business school department
+This r markdown project is the work of ***group 04*** students undertaking the course ***MIS-341 : Introduction to Data Analytics*** in **King Fahad University of Petroleum and Minerals** within KFUPM Business school department
 
 -   Kindly press ***`Ctrl + Shift + O`*** to quickly browse through the code
 -   All the codes are commented, to undo this effect: kindly select the codes in the chunks and press ***`Ctrl + Shift + C`***
 -   This project is covered in a highly detailed manner, kindly visit our github repository to get the full in-depth resources of the project [Github](https://github.com/mjaali/R-Squad), it includes the `README` file that has a wider point of view coverage of the case
 
-# Setting the resources
+# 0. Setting the resources
 
-In this first segment, we will cover the essential tasks to do prior to any analysis. we will prepare the R studio IDE with all the required resources, and organize them in a clean manner. These duties include the following :
+In this first segment, we will cover the essential tasks to do prior to any analysis.
+we will prepare the R studio IDE with all the required resources, and organize them in a clean manner.
+These duties include the following :
 
 -   Downloading packages used for the project
 
@@ -26,19 +31,22 @@ The packages we will use will be retrieved from the official CRAN repository, th
 
 -   Loading packages
 
-in R studio, packages have to be installed then loaded into the environment. Therefore, we specified a chunk code for the purpose of loading the packages
+in R studio, packages have to be installed then loaded into the environment.
+Therefore, we specified a chunk code for the purpose of loading the packages
 
 -   Setting the Directory
 
-R studio has a built in function of simplifying this task when creating an R project. But, since this project was shared on the cloud via github, we will reserve chunk of code that will set the directory per member.
+R studio has a built in function of simplifying this task when creating an R project.
+But, since this project was shared on the cloud via github, we will reserve chunk of code that will set the directory per member.
 
 -   Importing the Data set
 
-The final step of R preparation is to import in the data for analysis. We will use clear names throughout our code to make it easier for a reviewer to investigate our analysis and follow along the coding process.
+The final step of R preparation is to import in the data for analysis.
+We will use clear names throughout our code to make it easier for a reviewer to investigate our analysis and follow along the coding process.
 
 ------------------------------------------------------------------------
 
-## Libraries and Packages
+## 0.a Libraries and Packages
 
 ```{r}
 #'[ FIRST | we are going to creat a code that will install all codes required for us to do our analysis
@@ -54,7 +62,7 @@ The final step of R preparation is to import in the data for analysis. We will u
 library(tidyverse); library(writexl); library(readxl); library(scales); library(psych); library(desc)
 ```
 
-## Directory & Import
+## 0.b Directory & Import
 
 ```{r}
 # Abdulrahman:
@@ -82,22 +90,30 @@ empR <- emp
 
 ------------------------------------------------------------------------
 
-# Data Pre-processing
+# 1. Data Pre-processing
 
-## Data Exploration
+## 1.a Data Exploration
 
-After browsing through the data and understanding its structure, we defined some cases that need to be covered before proceeding with the analysis. Instead of deleting the suspected entries, we will create a second data frame that will house the data rejected from the analysis. Therefore, we will import the `original data set as AbsEmployees`, and then re-assign them into a data analysis set and a rejected set :
+After browsing through the data and understanding its structure, we defined some cases that need to be covered before proceeding with the analysis.
+Instead of deleting the suspected entries, we will create a second data frame that will house the data rejected from the analysis.
+Therefore, we will import the `original data set as AbsEmployees`, and then re-assign them into a data analysis set and a rejected set :
 
-> ***emp*** : Is the name of the data analysis set that will contain the data set ready-for-analysis ***empR*** : Is the data set rejected from analysis, and it will include the following : - Ambiguous store location entries - Duplicated entries - Incorrect Age Entries
-## Data Cleaning
-### Extracting the data
-We have observed that some data entries (employees), have ages below 18, and above 65. Legal age for working in Canada is 18 on average. Through further discussion with our manager, we have dictated that employees with ages out of these bounds will be removed from analysis.
+> ***emp*** : Is the name of the data analysis set that will contain the data set ready-for-analysis ***empR*** : Is the data set rejected from analysis, and it will include the following : - Ambiguous store location entries - Duplicated entries - Incorrect Age Entries \## Data Cleaning \### Extracting the data We have observed that some data entries (employees), have ages below 18, and above 65.
+> Legal age for working in Canada is 18 on average.
+> Through further discussion with our manager, we have dictated that employees with ages out of these bounds will be removed from analysis.
 
-Furthermore, some of the entries based on their store location are inconsistent. For example, A store location in a rural area will only have a single cashier. This is clearly the issue of a wrong entry of some scale in the data base. Which has also been extracted out of our analysis
+Furthermore, some of the entries based on their store location are inconsistent.
+For example, A store location in a rural area will only have a single cashier.
+This is clearly the issue of a wrong entry of some scale in the data base.
+Which has also been extracted out of our analysis
 
-The final case observed are of duplicated entries. It is uncommon to have multiple employees across different store locations to share the same first & last name, job title and so on. But it is outside the realms of reality to have multiple employees share many indicative features in the data base. Our decision was to also exclude those entries outside of our analysis, to keep our analysis as authentic as possible.
+The final case observed are of duplicated entries.
+It is uncommon to have multiple employees across different store locations to share the same first & last name, job title and so on.
+But it is outside the realms of reality to have multiple employees share many indicative features in the data base.
+Our decision was to also exclude those entries outside of our analysis, to keep our analysis as authentic as possible.
 
-**Note :** `empR` data set will have a column on the right-most specifying why the entry was rejected from analysis. Kindly refer to it in-case of amendments.
+**Note :** `empR` data set will have a column on the right-most specifying why the entry was rejected from analysis.
+Kindly refer to it in-case of amendments.
 
 ```{r}
 #'[ Extracting rejected data to empR data set
@@ -122,7 +138,7 @@ empR <- subset(empR, select = -c(dup))
 rm(empR_age, empR_dupli)
 ```
 
-### Cleaning the Ready-for-Analysis Data
+### 1.a.i Cleaning the Ready-for-Analysis Data
 
 ```{r}
 #'[ removing incorrect entries from the data set, and preparing it for analysis
@@ -140,11 +156,13 @@ emp <- emp[!duplicated(emp$dup), ]
 emp <- subset(emp, select = -c(dup))
 ```
 
-## Data Wrangling
+## 1.b Data Wrangling
 
-In this part, we are concerned with any manipulation required in order to improve the statistical accuracy and quality of our study. Therefore, after a keen study of the data and the case at hand, we have introduced the following variables :
+In this part, we are concerned with any manipulation required in order to improve the statistical accuracy and quality of our study.
+Therefore, after a keen study of the data and the case at hand, we have introduced the following variables :
 
--   **AbsHoursPerTenure** : This variable will be our dependent variable, the feature that is already existent in the data only accounts for the absent hours, regardless of the years of tenure. Since it is not statistically feasible to compare the absence of multiple employees with different tenures, it was decided to make a new variable that will take the proportional absence hours per year of service.
+-   **AbsHoursPerTenure** : This variable will be our dependent variable, the feature that is already existent in the data only accounts for the absent hours, regardless of the years of tenure.
+    Since it is not statistically feasible to compare the absence of multiple employees with different tenures, it was decided to make a new variable that will take the proportional absence hours per year of service.
 
 -   **EmployeeType** : This new variable will identify which type of employee we are studying, are they a working employee as a cashier or a back-end employee as a finance staff, this will help us identify which employee we can't afford to go absent
 
@@ -167,11 +185,15 @@ emp$EmployeeSector <- if_else(emp$JobTitle %in% c("Cashier", "Produce Clerk", "S
                                       "Chief/BoD")))
 ```
 
-## Data Classification
+## 1.c Data Classification
 
-after the addition of the variables that we will use for prediction. We will remove unnecessary variables from the statistical analysis, such variables are within the realms of **EmployeeNumber**, **Surname**, **GivenName**... etc. Any variable that will not affect the dependent variable will be removed from the data set.
+after the addition of the variables that we will use for prediction.
+We will remove unnecessary variables from the statistical analysis, such variables are within the realms of **EmployeeNumber**, **Surname**, **GivenName**... etc.
+Any variable that will not affect the dependent variable will be removed from the data set.
 
-Additionally, we will ensure data variables represent their correct data types. We will make sure a number variable is identified as `double` instead of `character`. We have to ensure the data types are assignet correctly in order to create dummy variables and use our predictive models ensuring our results are valid.
+Additionally, we will ensure data variables represent their correct data types.
+We will make sure a number variable is identified as `double` instead of `character`.
+We have to ensure the data types are assignet correctly in order to create dummy variables and use our predictive models ensuring our results are valid.
 
 ```{r}
 # removing excess variables and re-ordering the data
@@ -187,26 +209,29 @@ emp$BusinessUnit <- as.factor(emp$BusinessUnit)
 # the rest of the variables are correctly assigned (as intended)
 ```
 
-with the above codes in place, we have prepared our data for analysis. we explored the data for potential incorrect entries, we examined and removed any observation to another data set `empR`. additionally, we cleaned our main data set, added new variables to be studied, assigned the correct data types and ensured the data will function properly using r language statistical predictive models. `emp` is ready-for-analysis, and we will proceed to the next part of the report were we clarify how we will conduct our analysis to find the most influencial factors relating to employee absenteeism.
+with the above codes in place, we have prepared our data for analysis.
+we explored the data for potential incorrect entries, we examined and removed any observation to another data set `empR`.
+additionally, we cleaned our main data set, added new variables to be studied, assigned the correct data types and ensured the data will function properly using r language statistical predictive models.
+`emp` is ready-for-analysis, and we will proceed to the next part of the report were we clarify how we will conduct our analysis to find the most influencial factors relating to employee absenteeism.
 
 ------------------------------------------------------------------------
 
-# Analysis
+# 2. Analysis
 
-After we cleaned the data set, we commenced to the next segment in our project, which is the analysis of the data. the goal of the project is to identify factors that are most effective to absenteeism in the company, highlight them and offer our business recommendations on how to reduce them. Firstly, to reach that conclusion, we will do a descriptive analysis to understand what is currently happening. Secondly, we will use our findings from the descriptive analysis and conduct our predictive analysis to objectively project what will most likely to happen if we were to go through our recommendations. 
+After we cleaned the data set, we commenced to the next segment in our project, which is the analysis of the data.
+the goal of the project is to identify factors that are most effective to absenteeism in the company, highlight them and offer our business recommendations on how to reduce them.
+Firstly, to reach that conclusion, we will do a descriptive analysis to understand what is currently happening.
+Secondly, we will use our findings from the descriptive analysis and conduct our predictive analysis to objectively project what will most likely to happen if we were to go through our recommendations.
 
+## 2.a Descriptive Statistics
 
+In this segment of the project we will attempt to explore the data, and find correlations in our variables given.
+From this analysis, we will identify phenomenons and patterns that will justify the absenteeism causes within the company.
 
-## Descriptive Statistics
+### 2.a.i Absenteeism and Length service
 
-In this segment of the project we will attempt to explore the data, and find correlations in our variables given. From this analysis, we will identify phenomenons and patterns that will justify the absenteeism causes within the company.
-
-
-
-
-### Absenteeism and Length service
-
-We wanted to test link between the connection between how long an employee has served the company and the absenteesim rate they have. The logic behind this is the fact that if someone served more in the company, are they more likely or less likely to go absent?
+We wanted to test link between the connection between how long an employee has served the company and the absenteesim rate they have.
+The logic behind this is the fact that if someone served more in the company, are they more likely or less likely to go absent?
 
 ```{r}
 #'* a graph that shows the link between Length Service & AbsHrsPerTenure *
@@ -235,15 +260,23 @@ emp %>%
   theme_minimal()                                       # the theme/style of the plot
 ```
 
->findings
+> findings
 
-we can observe from the above graphs a great that there is a link between length service and absenteeism. the **purple graph** shows the overall relationship between absent hours per tenure for `all employees`. We observed a pattern and decided to do a deep dive as per business unit, and our findings were informative. the **red graph** shows the same graph but uniquely to `stores`,  and the **blue graph** shows the relationship for `head office` employees. 
-we can summize from the graphs that for stores employees, they clutter absenteeism early service years, around 0 ~ 10 years of service. Whereas head office employees distribute their absences over their years service. This information is crucial because it gave us a new point of view to observe patterns, now we are considering the absenteeism culture over the whole business unit. Addtionally, we will start to deep dive the importance of absences in Stores unit. We will do analysis on who we deem most important to not be absent. For example, if a high number of `Cashiers` go absent, customers will bottleneck on checkout, jeopardizing the in-store customer experience of the store.
+we can observe from the above graphs a great that there is a link between length service and absenteeism.
+the **purple graph** shows the overall relationship between absent hours per tenure for `all employees`.
+We observed a pattern and decided to do a deep dive as per business unit, and our findings were informative.
+the **red graph** shows the same graph but uniquely to `stores`, and the **blue graph** shows the relationship for `head office` employees.
+we can summize from the graphs that for stores employees, they clutter absenteeism early service years, around 0 \~ 10 years of service.
+Whereas head office employees distribute their absences over their years service.
+This information is crucial because it gave us a new point of view to observe patterns, now we are considering the absenteeism culture over the whole business unit.
+Addtionally, we will start to deep dive the importance of absences in Stores unit.
+We will do analysis on who we deem most important to not be absent.
+For example, if a high number of `Cashiers` go absent, customers will bottleneck on checkout, jeopardizing the in-store customer experience of the store.
 
+### 2.a.ii Absenteeism and Age
 
-### Absenteeism and Age 
-
-The one the most logical correlations is the age of the employee and how it affects the absenteeism rate they incur. This analysis answers the questions of _"Is the employee more likely to be absent the older they are? does age affect absenteeism?"_
+The one the most logical correlations is the age of the employee and how it affects the absenteeism rate they incur.
+This analysis answers the questions of *"Is the employee more likely to be absent the older they are? does age affect absenteeism?"*
 
 ```{r}
 #'* a graph that shows the link between Age and Absence Hours Per Tenure                                                                                                                                       *
@@ -262,22 +295,23 @@ emp %>%
   theme_minimal()                                                     # setting the theme for the graph
 ```
 
-
 > findings
 
-the findings of these graphs will shape our decision for the report. We can observe a very interesting phenomena when plotting age and absence hours per tenure, the graph shows how the absence hours per tenure increases referring to the age. Starting approximately the age 25, absenteeism increases around 0.9 hours. With this observation we can deduce that as for now, this is the strongest correlation we were able to find thus far. We will keep this graph in mind whilst making our recommendation, as well as explore it in the point of view of its effects per job title.
+the findings of these graphs will shape our decision for the report.
+We can observe a very interesting phenomena when plotting age and absence hours per tenure, the graph shows how the absence hours per tenure increases referring to the age.
+Starting approximately the age 25, absenteeism increases around 0.9 hours.
+With this observation we can deduce that as for now, this is the strongest correlation we were able to find thus far.
+We will keep this graph in mind whilst making our recommendation, as well as explore it in the point of view of its effects per job title.
 
----------------------------------------------------------------------
+------------------------------------------------------------------------
 
-## Predictive Statistics
+## 3. Predictive Statistics
 
 To begin with, we will try to build our model using AbsentHours to be our dependent variable.
-
 
 Firstly, We will do our correlation matrix to determine the correlation between the independent variables and our response variable, but since our data contains numeric and nonnumerical variables, we will do the correlation matrix manually.
 
 The first step will be defining the model matrix for each variable
-
 
 ```{r}
 m_V1 <- model.matrix(~ AbsentHours - 1, emp)
@@ -294,9 +328,7 @@ m_V11 <- model.matrix(~ EmployeeType - 1, emp)
 m_V12 <- model.matrix(~ AbsHrsPerTenure - 1, emp)
 ```
 
-
 Now we will do our correlation matrix between our response variable and other variables in the dataset.
-
 
 ```{r}
 cor(m_V1, m_V2)
@@ -316,15 +348,12 @@ rm(m_V1, m_V2, m_V5, m_V8, m_V9, m_V10, m_V11, m_V12 )
 After computing the correlation between our response variable and other variables, we will do tests of the correlations between some variables to test our assumptions of having multicollinearity between some variables.
 The first test will be between BusinessUnit and Division.
 
-
 ```{r}
 cor(m_VDivision, m_VBusinessUnit) 
 ```
 
-
 As we can see, we have a significant 100% correlation between DivisionStores and (BusinessUnitHeadOffice and BusinessUnitStores), which indicates that the presence of the two variables in our model will result in multicollinearity issues.
 Therefore, our optimal solution is to remove one of the two variables.
-
 
 Now, we will test the correlation between JubTitle and DepartmentName.
 
@@ -338,7 +367,6 @@ rm(m_VJobTitle, m_VDepartmentName, m_VDivision, m_VBusinessUnit)
 
 Based on the obtained results, we can conclude that the presence of these two variables will create a problem of multicollinearity, due to the high correlation (more than 95%) between some of the observations.
 Therefore, our optimal solution is to remove one of the two variables
-
 
 For the other variables, there is no need for testing the correlation between them, due to that it seems that there is no significant correlation between them, but if a high correlation was percent, R will find it and solve the problem.
 
@@ -382,8 +410,8 @@ summary(model11)$r.squared
 # R-squared of model11 is 0.1665376
 rm(model01, model02, model03, model04, model05, model06, model07, model08, model09, model10, model11)
 ```
-From the obtained result we can see that the variable that has the highest impact on our response variable is (Age),
 
+From the obtained result we can see that the variable that has the highest impact on our response variable is (Age),
 
 Now, we will run a model with all variables.
 
@@ -398,8 +426,7 @@ summary(model12)$r.squared
 
 ```
 
- As we can observe, the R-squared for the full model came out to be 0.7407666
- Additionally, in the full model, 8 variables are significant, therefore, we will drop the insignificant variables and run the model again.
+As we can observe, the R-squared for the full model came out to be 0.7407666 Additionally, in the full model, 8 variables are significant, therefore, we will drop the insignificant variables and run the model again.
 
 ```{r}
 model12 <- lm(AbsentHours ~ EmployeeSector+ EmployeeType+ Gender+ JobTitle+ StoreLocation + Age+ LengthService + AbsHrsPerTenure, data = emp)
@@ -416,13 +443,9 @@ rm(model12)
 
 Based on the obtained results, we can observe that the R-squared has not changed after deleting the insignificant variables.
 
-
 After computing the models, we will create a new dataset to implement our First model based on the variables that we believe it has an impact on our response variable.
 
-
-
 *(PredData)* refers to the data that we are going to use in building our new model.
-
 
 ```{r}
 PredData <- emp
@@ -432,10 +455,9 @@ PredData = subset(PredData, select = -c(DepartmentName, Division) )
 We have deleted the listed variables to implement our first model because of the below reasons:
 
 *DepartmentName:* Because it is related to the JobTitle, therefore, if we include it in the model a multicollinearity problem will rise.
-*Note:*  we can do the opposite but we will do it this way at the moment until we find our optimal model.
+*Note:* we can do the opposite but we will do it this way at the moment until we find our optimal model.
 *Division:* Because it is related to the business unit, therefore, if we include it in the model a multicollinearity problem will rise.
-*Note:*  we can do the opposite but we will do it this way at the moment until we find our optimal model.
-
+*Note:* we can do the opposite but we will do it this way at the moment until we find our optimal model.
 
 ```{r}
 model13 <- lm(AbsentHours ~., data = PredData)
@@ -443,15 +465,14 @@ anova(model13)
 summary(model13)$r.squared
 rm(model13)
 ```
+
 According to the results obtained using this model, it shows that there is a variable (EmployeeNumber) that is insignificant at alpha = 0.05, which results in some NA values.
 
 R-squared is 0.7407666
----------------------------------------------------------------------
 
 Now, we will try some advanced methods for building our optimal model, listed below:
 
-1- Backward elimination
-2- Forward Stepwise
+1- Backward elimination 2- Forward Stepwise
 
 ------------------------------------------------------------------------
 
@@ -483,16 +504,13 @@ R-squared is 0.7391996
 
 Now, we will use the Forward stepwise regression method
 
-
-#Forward stepwise method
+Forward stepwise method
 
 *Stipwisedata* represents the data that we are going to use to implement our model using the Forward stepwise method.
 
- To implement our forward stepwise method we should follow the folowing steps:
+To implement our forward stepwise method we should follow the folowing steps:
 
-1- we will define our intercept-only model
-2- we will define a model with all predictors
-3- we will perform forward stepwise regression
+1- we will define our intercept-only model 2- we will define a model with all predictors 3- we will perform forward stepwise regression
 
 ```{r}
 Stipwisedata <- emp
@@ -520,10 +538,12 @@ After deleting the insignificant variable, the model becomes significant at alph
 
 R-squared is 0.7391996
 
+As we can see, using these two approaches (Backward elimination, Forward stepwise), we got the same results for the R-squared approach!
+Therefore, our optimal model using (AbsentHours) as a response variable will be the model that was obtained using the Forward stepwise approach, as it has a lower number of variables than the Backward Elimination approach with the same confections of determination.
+Additionally, although our full model is having higher R-squared than Forward Stepwise, the difference between the R-squared is insignificant.
+furthermore, in the full model, we have 8 variables while in this model we have just four which will minimize our effort when we apply the regression.
 
-As we can see, using these two approaches (Backward elimination, Forward stepwise), we got the same results for the R-squared approach! Therefore, our optimal model using (AbsentHours) as a response variable will be the model that was obtained using the Forward stepwise approach, as it has a lower number of variables than the Backward Elimination approach with the same confections of determination. Additionally, although our full model is having higher R-squared than Forward Stepwise, the difference between the R-squared is insignificant. furthermore, in the full model, we have 8 variables while in this model we have just four which will minimize our effort when we apply the regression.
-
--------------------------------------------------------------------
+------------------------------------------------------------------------
 
 Now, we will try to build our model using AbsHrsPerTenure to be our dependent variable.
 
@@ -563,8 +583,7 @@ rm(m_V13, m_V14, m_V17, m_V20, m_V21, m_V22, m_V23, m_V24 )
 
 After computing the correlation between our response variable and other variables, we will do tests of the correlations between some variables to test our assumptions of having multicollinearity between some variables.
 
-
-##First test will be between BusinessUnit and Division.
+First test will be between BusinessUnit and Division.
 
 ```{r}
 cor(m_VDivision, m_VBusinessUnit) 
@@ -573,22 +592,21 @@ cor(m_VDivision, m_VBusinessUnit)
 As we can see, we have a significant 100% correlation between DivisionStores and (BusinessUnitHeadOffice and BusinessUnitStores), which indicates that the presence of the two variables in our model will result in multicollinearity issues.
 Therefore, our optimal solution is to remove one of the two variables.
 
-------------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 Now, we will test the correlation between JubTitle and DepartmentName.
+
 ```{r}
 cor(m_VJobTitle, m_VDepartmentName)
 
 rm(m_VJobTitle, m_VDepartmentName, m_VDivision, m_VBusinessUnit)
 
 ```
+
 Based on the obtained results, we can conclude that the presence of these two variables will create a problem of multicollinearity, due to the high correlation (more than 95%) between some of the observations.
 Therefore, our optimal solution is to remove one of the two variables.
 
-------------------------------------------------------------------------------
 For the other variables, there is no need for testing the correlation between them, due to that it seems that there is no significant correlation between them, but if a high correlation was percent, R will find it and alert us of the problem.
-
-------------------------------------------------------------------------------
 
 After computing the correlation matrix, we will try to run models for each variable to determine which variable has the highest impact.
 
@@ -633,7 +651,7 @@ rm(model17, model18, model19, model20, model21, model22, model23, model24, model
 
 From the obtained result we can see that the variable that has the highest impact on the response variable is *AbsentHours* and then *Age*.
 
-----------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 Now, we will run a model with all variables.
 
@@ -659,9 +677,9 @@ PredData2 = subset(PredData2, select = -c(DepartmentName, Division) )
 We have deleted the listed variables to implement our first model because of the below reasons:
 
 *DepartmentName:* Because it is related to the JobTitle, therefore, if we include it in the model a multicollinearity problem will rise.
-*Note:*  we can do the opposite but we will do it this way at the moment until we find our optimal model.
+*Note:* we can do the opposite but we will do it this way at the moment until we find our optimal model.
 *Division:* Because it is related to the BusinessUnit, therefore, if we include it in the model a multicollinearity problem will rise.
-*Note:*  we can do the opposite but we will do it this way at the moment until we find our optimal model.
+*Note:* we can do the opposite but we will do it this way at the moment until we find our optimal model.
 
 ```{r}
 model29 <- lm(AbsHrsPerTenure ~., data = PredData2)
@@ -672,14 +690,11 @@ rm(model29)
 
 According to the results obtained using this model, it shows that there are some variables that are insignificant, As a result, some observations are having NA values, to reduce them to a minimum, we will try some advanced methods of modeling.
 
---------------------------------------------------------------------------
-Now, we will try some advanced methods for building our optimal model, listed below:
-
-1- Backward elimination
-2 - Forward Stepwise
 ------------------------------------------------------------------------
 
-# Backward elimination method:
+Now, we will try some advanced methods for building our optimal model, listed below: 1- Backward elimination 2 - Forward Stepwise
+
+Backward elimination method:
 
 *BackwardData2* represents the data that we are going to use to implement our model using the backward elimination method
 
@@ -698,9 +713,9 @@ As we can see, after using the Backward Elimination method, our variables have b
 
 Also, R-squared has been found out to be 0.2362546
 
-----------------------------------------------------------------------------
-Here, we will use the Forward stepwise regression method
+------------------------------------------------------------------------
 
+Here, we will use the Forward stepwise regression method
 
 Forward stepwise method
 
@@ -708,11 +723,10 @@ Forward stepwise method
 
 To implement our forward stepwise method we should follow the folowing steps:
 
-1- we will define our intercept-only model
-2- we will define a model with all predictors
-3- we will perform forward stepwise regression
+1- we will define our intercept-only model 2- we will define a model with all predictors 3- we will perform forward stepwise regression
 
 ```{r}
+
 Stipwisedata2 <- emp
 #Firstly, we will define our intercept-only model
 intercept_only2 <- lm(AbsHrsPerTenure~ 1, data=Stipwisedata2)
@@ -739,15 +753,16 @@ As we can see, we have defined in this model 4 variables to be added to our mode
 
 Also, R-squared came out to be 0.2321445
 
---------------------------------------------------------------------------
+------------------------------------------------------------------------
 
-As we can see, using these two approaches (Backward elimination, Forward stepwise), we got defferint results. Furthermore, the confession of determination is very small for the two methods.
+As we can see, using these two approaches (Backward elimination, Forward stepwise), we got defferint results.
+Furthermore, the confession of determination is very small for the two methods.
 
---------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 To conclude, our optimal model will be the one we obtained using the Forward stepwise method with *AbsentHours* as a response variable.
 
-# Our final model will be:
+Our final model will be:
 
 ```{r}
 #
@@ -759,6 +774,12 @@ rm(intercept_only, intercept_only2, Stipwisedata)
 
 ------------------------------------------------------------------------
 
-# Recommendation
+# 4. Recommendation
 
-The Cashier has the highest Absenteeism Culture level. In the city of Vancouver, the age `24.51` y/o and beyond is where Absenteeism hours escalate with a strong correlation for both males and females at a `slope of 0.9395x`. Since our x-intercept is `24.51`, or in other words, Cashiers below the age of 24.51 have no absenteeism hours `(0 Hrs / year)`. The avg. tenure of the Cashier is `4.58 years`. A policy to hire Cashiers of a maximum of `20 y/o` will ensure most cashiers will clear out of the company before they turn 25 and reduce overall company absenteeism significantly. However, we have to validate if these young cashiers are full-time or part-time in order to control the cost associated with high-frequency and high-volume recruiting, plus investigate the compensation increase as a result, along with the total supply of such type of workers.
+The Cashier has the highest Absenteeism Culture level.
+In the city of Vancouver, the age `24.51` y/o and beyond is where Absenteeism hours escalate with a strong correlation for both males and females at a `slope of 0.9395x`.
+Since our x-intercept is `24.51`, or in other words, Cashiers below the age of 24.51 have no absenteeism hours `(0 Hrs / year)`.
+The avg.
+tenure of the Cashier is `4.58 years`.
+A policy to hire Cashiers of a maximum of `20 y/o` will ensure most cashiers will clear out of the company before they turn 25 and reduce overall company absenteeism significantly.
+However, we have to validate if these young cashiers are full-time or part-time in order to control the cost associated with high-frequency and high-volume recruiting, plus investigate the compensation increase as a result, along with the total supply of such type of workers.
