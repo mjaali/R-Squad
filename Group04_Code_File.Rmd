@@ -13,7 +13,7 @@ editor_options:
 
 ### i. Notes & Remarks
 
-This r markdown project is the work of ***group 04*** students undertaking the course ***MIS-341 : Introduction to Data Analytics*** in **King Fahad University of Petroleum and Minerals** within KFUPM Business school department
+This r markdown project is the work of ***group 04*** students undertaking the course ***MIS-341 : Introduction to Data Analytics*** at **King Fahd University of Petroleum and Minerals** within KFUPM Business school department
 
 -   Kindly press ***`Ctrl + Shift + O`*** to quickly browse through the code
 -   All the codes are commented, to undo this effect: kindly select the codes in the chunks and press ***`Ctrl + Shift + C`***
@@ -101,11 +101,10 @@ Therefore, we will import the `original data set as AbsEmployees`, and then re-a
 > ***emp*** : Is the name of the data analysis set that will contain the data set ready-for-analysis ***empR*** : Is the data set rejected from analysis, and it will include the following : - Ambiguous store location entries - Duplicated entries - Incorrect Age Entries \## Data Cleaning \### Extracting the data We have observed that some data entries (employees), have ages below 18, and above 65.
 > Legal age for working in Canada is 18 on average.
 > Through further discussion with our manager, we have dictated that employees with ages out of these bounds will be removed from analysis.
-
-Furthermore, some of the entries based on their store location are inconsistent.
-For example, A store location in a rural area will only have a single cashier.
-This is clearly the issue of a wrong entry of some scale in the data base.
-Which has also been extracted out of our analysis
+> Furthermore, some of the entries based on their store location are inconsistent.
+> For example, A store location in a rural area will only have a single cashier.
+> This is clearly the issue of a wrong entry of some scale in the data base.
+> Which has also been extracted out of our analysis
 
 The final case observed are of duplicated entries.
 It is uncommon to have multiple employees across different store locations to share the same first & last name, job title and so on.
@@ -260,18 +259,16 @@ emp %>%
   theme_minimal()                                       # the theme/style of the plot
 ```
 
-> findings
-
-we can observe from the above graphs a great that there is a link between length service and absenteeism.
-the **purple graph** shows the overall relationship between absent hours per tenure for `all employees`.
-We observed a pattern and decided to do a deep dive as per business unit, and our findings were informative.
-the **red graph** shows the same graph but uniquely to `stores`, and the **blue graph** shows the relationship for `head office` employees.
-we can summize from the graphs that for stores employees, they clutter absenteeism early service years, around 0 \~ 10 years of service.
-Whereas head office employees distribute their absences over their years service.
-This information is crucial because it gave us a new point of view to observe patterns, now we are considering the absenteeism culture over the whole business unit.
-Addtionally, we will start to deep dive the importance of absences in Stores unit.
-We will do analysis on who we deem most important to not be absent.
-For example, if a high number of `Cashiers` go absent, customers will bottleneck on checkout, jeopardizing the in-store customer experience of the store.
+> findings we can observe from the above graphs a great that there is a link between length service and absenteeism.
+> the **purple graph** shows the overall relationship between absent hours per tenure for `all employees`.
+> We observed a pattern and decided to do a deep dive as per business unit, and our findings were informative.
+> the **red graph** shows the same graph but uniquely to `stores`, and the **blue graph** shows the relationship for `head office` employees.
+> we can summize from the graphs that for stores employees, they clutter absenteeism early service years, around 0 \~ 10 years of service.
+> Whereas head office employees distribute their absences over their years service.
+> This information is crucial because it gave us a new point of view to observe patterns, now we are considering the absenteeism culture over the whole business unit.
+> Addtionally, we will start to deep dive the importance of absences in Stores unit.
+> We will do analysis on who we deem most important to not be absent.
+> For example, if a high number of `Cashiers` go absent, customers will bottleneck on checkout, jeopardizing the in-store customer experience of the store.
 
 ### 2.a.ii Absenteeism and Age
 
@@ -295,13 +292,11 @@ emp %>%
   theme_minimal()                                                     # setting the theme for the graph
 ```
 
-> findings
-
-the findings of these graphs will shape our decision for the report.
-We can observe a very interesting phenomena when plotting age and absence hours per tenure, the graph shows how the absence hours per tenure increases referring to the age.
-Starting approximately the age 25, absenteeism increases around 0.9 hours.
-With this observation we can deduce that as for now, this is the strongest correlation we were able to find thus far.
-We will keep this graph in mind whilst making our recommendation, as well as explore it in the point of view of its effects per job title.
+> findings the findings of these graphs will shape our decision for the report.
+> We can observe a very interesting phenomena when plotting age and absence hours per tenure, the graph shows how the absence hours per tenure increases referring to the age.
+> Starting approximately the age 25, absenteeism increases around 0.9 hours.
+> With this observation we can deduce that as for now, this is the strongest correlation we were able to find thus far.
+> We will keep this graph in mind whilst making our recommendation, as well as explore it in the point of view of its effects per job title.
 
 ------------------------------------------------------------------------
 
@@ -359,10 +354,7 @@ Now, we will test the correlation between JubTitle and DepartmentName.
 
 ```{r}
 cor(m_VJobTitle, m_VDepartmentName)
-
-
 rm(m_VJobTitle, m_VDepartmentName, m_VDivision, m_VBusinessUnit)
-
 ```
 
 Based on the obtained results, we can conclude that the presence of these two variables will create a problem of multicollinearity, due to the high correlation (more than 95%) between some of the observations.
@@ -411,37 +403,33 @@ summary(model11)$r.squared
 rm(model01, model02, model03, model04, model05, model06, model07, model08, model09, model10, model11)
 ```
 
-From the obtained result we can see that the variable that has the highest impact on our response variable is (Age),
+From the obtained result we can see that the variable that has the highest impact on our response variable is (Age) with R-squared of 0.6833127
 
 Now, we will run a model with all variables.
 
 ```{r}
 model12 <- lm(AbsentHours ~., data = emp)
-
 # ANOVA table will be applied on the model
 anova(model12)
-
 # R-squared will be computed
 summary(model12)$r.squared
-
 ```
 
-As we can observe, the R-squared for the full model came out to be 0.7407666 Additionally, in the full model, 8 variables are significant, therefore, we will drop the insignificant variables and run the model again.
+As we can observe, the R-squared for the full model came out to be 0.7407666
+
+Additionally, in the full model, 8 variables are significant, therefore, we will drop the insignificant variables and run the model again.
 
 ```{r}
 model12 <- lm(AbsentHours ~ EmployeeSector+ EmployeeType+ Gender+ JobTitle+ StoreLocation + Age+ LengthService + AbsHrsPerTenure, data = emp)
-
 # ANOVA table will be applied on the model
 anova(model12)
-
 # R-squared will be computed
 summary(model12)$r.squared
-
 rm(model12)
-
 ```
 
 Based on the obtained results, we can observe that the R-squared has not changed after deleting the insignificant variables.
+Therefore, the present of the insignificant variables may not affect the R-squared, but it can cause other problems related to our model, such as multicollinearity or outliers.
 
 After computing the models, we will create a new dataset to implement our First model based on the variables that we believe it has an impact on our response variable.
 
@@ -466,13 +454,15 @@ summary(model13)$r.squared
 rm(model13)
 ```
 
-According to the results obtained using this model, it shows that there is a variable (EmployeeNumber) that is insignificant at alpha = 0.05, which results in some NA values.
+According to the results obtained using this model, it shows that there is a variable (EmployeeNumber) that is insignificant at alpha = 0.05
 
 R-squared is 0.7407666
 
 Now, we will try some advanced methods for building our optimal model, listed below:
 
-1- Backward elimination 2- Forward Stepwise
+1- Backward elimination
+
+2- Forward Stepwise
 
 ------------------------------------------------------------------------
 
@@ -486,16 +476,12 @@ Backward elimination method:
 BackwardData <- emp
 BackwardModel <- lm(AbsentHours ~., data = BackwardData)
 BackwardModel <- step(BackwardModel, direction = "backward", trace=FALSE ) 
-
 # ANOVA table will be shown for the model
 anova(BackwardModel)
-
 # R-squared of the model will be applied
 summary(BackwardModel)$r.squared
-
 #we will view our model of backward elemination method.
 BackwardModel$coefficients
-
 ```
 
 As we can see, after using the Backward Elimination method, we have defined five variables to be in our model and all of them are significant at alpha = 0.05
@@ -510,7 +496,11 @@ Forward stepwise method
 
 To implement our forward stepwise method we should follow the folowing steps:
 
-1- we will define our intercept-only model 2- we will define a model with all predictors 3- we will perform forward stepwise regression
+1- we will define our intercept-only model
+
+2- we will define a model with all predictors
+
+3- we will perform forward stepwise regression
 
 ```{r}
 Stipwisedata <- emp
@@ -520,9 +510,7 @@ FullModel <- lm(AbsentHours ~ ., data=Stipwisedata)
 # Finally, we wil perform forward stepwise regression
 StipwiseModel <- step(intercept_only, direction='forward', scope=formula(FullModel), trace=0)
 #Now, we will view the results of forward stepwise regression
-
 anova(StipwiseModel)
-
 summary(StipwiseModel)$r.squared
 ```
 
@@ -581,7 +569,9 @@ cor(m_V13, m_V24)
 rm(m_V13, m_V14, m_V17, m_V20, m_V21, m_V22, m_V23, m_V24 )
 ```
 
-After computing the correlation between our response variable and other variables, we will do tests of the correlations between some variables to test our assumptions of having multicollinearity between some variables.
+After computing the correlation between our response variable and other variables, we can observe that the correlation between the variables and our response variable is small, which indicates that our response variable (AbsHrsPerTenure) may not be ideal.
+
+Now, we will test the correlations between some variables to prove our assumptions of having multicollinearity between some variables.
 
 First test will be between BusinessUnit and Division.
 
@@ -598,9 +588,7 @@ Now, we will test the correlation between JubTitle and DepartmentName.
 
 ```{r}
 cor(m_VJobTitle, m_VDepartmentName)
-
 rm(m_VJobTitle, m_VDepartmentName, m_VDivision, m_VBusinessUnit)
-
 ```
 
 Based on the obtained results, we can conclude that the presence of these two variables will create a problem of multicollinearity, due to the high correlation (more than 95%) between some of the observations.
@@ -657,7 +645,6 @@ Now, we will run a model with all variables.
 
 ```{r}
 model28 <- lm(AbsHrsPerTenure ~., data = emp)
-
 anova(model28)
 summary(model28)$r.squared
 rm(model28)
@@ -677,8 +664,11 @@ PredData2 = subset(PredData2, select = -c(DepartmentName, Division) )
 We have deleted the listed variables to implement our first model because of the below reasons:
 
 *DepartmentName:* Because it is related to the JobTitle, therefore, if we include it in the model a multicollinearity problem will rise.
+
 *Note:* we can do the opposite but we will do it this way at the moment until we find our optimal model.
+
 *Division:* Because it is related to the BusinessUnit, therefore, if we include it in the model a multicollinearity problem will rise.
+
 *Note:* we can do the opposite but we will do it this way at the moment until we find our optimal model.
 
 ```{r}
@@ -692,7 +682,11 @@ According to the results obtained using this model, it shows that there are some
 
 ------------------------------------------------------------------------
 
-Now, we will try some advanced methods for building our optimal model, listed below: 1- Backward elimination 2 - Forward Stepwise
+Now, we will try some advanced methods for building our optimal model, listed below:
+
+1- Backward elimination
+
+2 - Forward Stepwise
 
 Backward elimination method:
 
@@ -705,7 +699,6 @@ BackwardModel2 <- step(BackwardModel2, direction = "backward", trace=FALSE )
 #Now, we will view the results of Backward elemination regression
 anova(BackwardModel2)
 #Finally, we will view our model of backward elemination method.
-
 summary(BackwardModel2)$r.squared
 ```
 
@@ -723,22 +716,20 @@ Forward stepwise method
 
 To implement our forward stepwise method we should follow the folowing steps:
 
-1- we will define our intercept-only model 2- we will define a model with all predictors 3- we will perform forward stepwise regression
+1- we will define our intercept-only model
+
+2- we will define a model with all predictors
+
+3- we will perform forward stepwise regression
 
 ```{r}
-
 Stipwisedata2 <- emp
 #Firstly, we will define our intercept-only model
 intercept_only2 <- lm(AbsHrsPerTenure~ 1, data=Stipwisedata2)
-
 #Secondly, we will define a model with all predictors
-
 FullModel2 <- lm(AbsHrsPerTenure ~ ., data=Stipwisedata2)
-
 # Finally, we wil perform forward stepwise regression
-
 StepwiseModel2 <- step(intercept_only2, direction='forward', scope=formula(FullModel2), trace=0)
-
 #Now, we will view the results of forward stepwise regression
 anova(StepwiseModel2)
 #At the end, we will view our final model of forward stepwise method.
@@ -767,9 +758,7 @@ Our final model will be:
 ```{r}
 #
 StipwiseModel$coefficients
-
 rm(intercept_only, intercept_only2, Stipwisedata)
-
 ```
 
 ------------------------------------------------------------------------
