@@ -11,12 +11,14 @@ editor_options:
     wrap: sentence
 ---
 
-### i. Notes & Remarks
+<img src="https://mjaali.com/R-Squad/Assets/Brand/Rsquad%20Project%20Report%20Header.png"/>
+
+### Notes & Remarks
 
 This r markdown project is the work of ***group 04*** students undertaking the course ***MIS-341 : Introduction to Data Analytics*** at **King Fahd University of Petroleum and Minerals** within KFUPM Business school department
 
 -   Kindly press ***`Ctrl + Shift + O`*** to quickly browse through the code
--   All the codes are commented, to undo this effect: kindly select the codes in the chunks and press ***`Ctrl + Shift + C`***
+-   Some of the codes are commented, to undo this effect: kindly select the codes in the chunks and press ***`Ctrl + Shift + C`***
 -   This project is covered in a highly detailed manner, kindly visit our github repository to get the full in-depth resources of the project [Github](https://github.com/mjaali/R-Squad), it includes the `README` file that has a wider point of view coverage of the case
 
 # 0. Setting the resources
@@ -58,8 +60,10 @@ We will use clear names throughout our code to make it easier for a reviewer to 
 # 
 # #' packages installed by MQ
 # install.packages("descr")
+
 #'[ SECOND | we load all the packages into R 
 library(tidyverse); library(writexl); library(readxl); library(scales); library(psych); library(desc)
+
 ```
 
 ## 0.b Directory & Import
@@ -68,15 +72,15 @@ library(tidyverse); library(writexl); library(readxl); library(scales); library(
 # Abdulrahman:
 #'[ Setting the Directory
 #setwd( dir = "D:/4. MIS-341/1. Course Work/00. Group Project/MIS341-02_Group 4")
-#'[ Loading the File
+#'[ Loading the File (AJ)
 #AbsEmployees <- read_excel("../MIS341-02_Group 4/1. input/AbsEmployees.xlsx", sheet = 1)
 # Mohammed Alquraini:
-#'[ Setting the Directory
-setwd( dir = "C:\\Users\\Lenovo\\Documents\\MIS431- Project\\")
-#'[ Loading the File
-AbsEmployees <- read_excel("../MIS431- Project/AbsEmployees.xlsx", sheet = 1)
+#'[ Setting the Directory (MQ)
+# setwd( dir = "C:\\Users\\Lenovo\\Documents\\MIS431- Project\\")
+#'[ Loading the File (AG)
+AbsEmployees <- read_excel("D:/4. MIS-341/1. Course Work/00. Group Project/MIS341-02_Group 4/1. input/AbsEmployees.xlsx", sheet = 1)
 ####
-# # Loading file - github fetch version
+# # Loading file - github fetch version (MJ - Github)
 # setwd( dir = "/Users/mjaali/webapps/R-Squad/Assets/");
 # AbsEmployees <- read_excel("MJ Version - AbsEmployees.xlsx", sheet = 1);
 # AbsEmployees <- read_excel("Abdulrahman Version - AbsEmployees.xlsx", sheet = 1);
@@ -98,18 +102,16 @@ After browsing through the data and understanding its structure, we defined some
 Instead of deleting the suspected entries, we will create a second data frame that will house the data rejected from the analysis.
 Therefore, we will import the `original data set as AbsEmployees`, and then re-assign them into a data analysis set and a rejected set :
 
-> ***emp*** : Is the name of the data analysis set that will contain the data set ready-for-analysis ***empR*** : Is the data set rejected from analysis, and it will include the following : - Ambiguous store location entries - Duplicated entries - Incorrect Age Entries \## Data Cleaning \### Extracting the data We have observed that some data entries (employees), have ages below 18, and above 65.
-> Legal age for working in Canada is 18 on average.
-> Through further discussion with our manager, we have dictated that employees with ages out of these bounds will be removed from analysis.
-> Furthermore, some of the entries based on their store location are inconsistent.
-> For example, A store location in a rural area will only have a single cashier.
-> This is clearly the issue of a wrong entry of some scale in the data base.
-> Which has also been extracted out of our analysis
+> ***emp*** : Is the name of the data analysis set that will contain the data set ready-for-analysis\
+
+> ***empR*** : Is the data set rejected from analysis, and it will include the following : ( Ambiguous store location entries - Duplicated entries - Incorrect Age Entries )
+
+## 1.b Data Cleaning
+
+Extracting the data We have observed that some data entries (employees), have ages below 18, and above 65.Legal age for working in Canada is 18 on average.Through further discussion with our manager, we have dictated that employees with ages out of these bounds will be removed from analysis.Furthermore, some of the entries based on their store location are inconsistent.For example, A store location in a rural area will only have a single cashier.This is clearly the issue of a wrong entry of some scale in the data base.Which has also been extracted out of our analysis
 
 The final case observed are of duplicated entries.
-It is uncommon to have multiple employees across different store locations to share the same first & last name, job title and so on.
-But it is outside the realms of reality to have multiple employees share many indicative features in the data base.
-Our decision was to also exclude those entries outside of our analysis, to keep our analysis as authentic as possible.
+It is uncommon to have multiple employees across different store locations to share the same first & last name, job title and so on.But it is outside the realms of reality to have multiple employees share many indicative features in the data base.Our decision was to also exclude those entries outside of our analysis, to keep our analysis as authentic as possible.
 
 **Note :** `empR` data set will have a column on the right-most specifying why the entry was rejected from analysis.
 Kindly refer to it in-case of amendments.
@@ -137,7 +139,7 @@ empR <- subset(empR, select = -c(dup))
 rm(empR_age, empR_dupli)
 ```
 
-### 1.a.i Cleaning the Ready-for-Analysis Data
+### 1.b.i Cleaning the Ready-for-Analysis Data
 
 ```{r}
 #'[ removing incorrect entries from the data set, and preparing it for analysis
@@ -155,17 +157,22 @@ emp <- emp[!duplicated(emp$dup), ]
 emp <- subset(emp, select = -c(dup))
 ```
 
-## 1.b Data Wrangling
+## 1.c Data Wrangling
 
 In this part, we are concerned with any manipulation required in order to improve the statistical accuracy and quality of our study.
 Therefore, after a keen study of the data and the case at hand, we have introduced the following variables :
 
--   **AbsHoursPerTenure** : This variable will be our dependent variable, the feature that is already existent in the data only accounts for the absent hours, regardless of the years of tenure.
+-   **AbsHoursPerTenure** : $AbsHoursPerTenur=AbsenceHours / LengthService$\
+    This variable will be our dependent variable, the feature that is already existent in the data only accounts for the absent hours, regardless of the years of tenure.
     Since it is not statistically feasible to compare the absence of multiple employees with different tenures, it was decided to make a new variable that will take the proportional absence hours per year of service.
 
--   **EmployeeType** : This new variable will identify which type of employee we are studying, are they a working employee as a cashier or a back-end employee as a finance staff, this will help us identify which employee we can't afford to go absent
+-   **EmployeeType** : This new variable will identify which type of employee we are studying, are they a working employee as a cashier or a back-end employee as a finance staff, this will help us identify which employee we can't afford to go absent\
 
--   **EmployeeSector** : This variable will help us identify absenteeism based on the sector the employee works in, it answers the question of "Are finance employees more likely to go absent in comparison to HR employees?".
+<img src="https://raw.githubusercontent.com/mjaali/R-Squad/main/Assets/Pics/variable%20-%20employee%20type.png?token=GHSAT0AAAAAAB2IXOASCOP7TV7MUGKAAJM4Y46MOMQ"/>
+
+-   **EmployeeSector** : This variable will help us identify absenteeism based on the sector the employee works in, it answers the question of "Are finance employees more likely to go absent in comparison to HR employees?".\
+
+<img src="https://raw.githubusercontent.com/mjaali/R-Squad/main/Assets/Pics/variable%20-%20sector.png?token=GHSAT0AAAAAAB2IXOASFJ5TS2OON7ZM52EMY46MPCQ"/>
 
 ```{r}
 # (1) creating a proportional Absence hours per year in the company
@@ -184,7 +191,7 @@ emp$EmployeeSector <- if_else(emp$JobTitle %in% c("Cashier", "Produce Clerk", "S
                                       "Chief/BoD")))
 ```
 
-## 1.c Data Classification
+## 1.d Data Classification
 
 after the addition of the variables that we will use for prediction.
 We will remove unnecessary variables from the statistical analysis, such variables are within the realms of **EmployeeNumber**, **Surname**, **GivenName**... etc.
@@ -259,16 +266,9 @@ emp %>%
   theme_minimal()                                       # the theme/style of the plot
 ```
 
-> findings we can observe from the above graphs a great that there is a link between length service and absenteeism.
-> the **purple graph** shows the overall relationship between absent hours per tenure for `all employees`.
-> We observed a pattern and decided to do a deep dive as per business unit, and our findings were informative.
-> the **red graph** shows the same graph but uniquely to `stores`, and the **blue graph** shows the relationship for `head office` employees.
-> we can summize from the graphs that for stores employees, they clutter absenteeism early service years, around 0 \~ 10 years of service.
-> Whereas head office employees distribute their absences over their years service.
-> This information is crucial because it gave us a new point of view to observe patterns, now we are considering the absenteeism culture over the whole business unit.
-> Addtionally, we will start to deep dive the importance of absences in Stores unit.
-> We will do analysis on who we deem most important to not be absent.
-> For example, if a high number of `Cashiers` go absent, customers will bottleneck on checkout, jeopardizing the in-store customer experience of the store.
+> findings\
+
+we can observe from the above graphs a great that there is a link between length service and absenteeism.the **purple graph** shows the overall relationship between absent hours per tenure for `all employees`.We observed a pattern and decided to do a deep dive as per business unit, and our findings were informative.the **red graph** shows the same graph but uniquely to `stores`, and the **blue graph** shows the relationship for `head office` employees.we can summize from the graphs that for stores employees, they clutter absenteeism early service years, around 0 \~ 10 years of service.Whereas head office employees distribute their absences over their years service.This information is crucial because it gave us a new point of view to observe patterns, now we are considering the absenteeism culture over the whole business unit.Addtionally, we will start to deep dive the importance of absences in Stores unit.We will do analysis on who we deem most important to not be absent.For example, if a high number of `Cashiers` go absent, customers will bottleneck on checkout, jeopardizing the in-store customer experience of the store.
 
 ### 2.a.ii Absenteeism and Age
 
@@ -292,15 +292,14 @@ emp %>%
   theme_minimal()                                                     # setting the theme for the graph
 ```
 
-> findings the findings of these graphs will shape our decision for the report.
-> We can observe a very interesting phenomena when plotting age and absence hours per tenure, the graph shows how the absence hours per tenure increases referring to the age.
-> Starting approximately the age 25, absenteeism increases around 0.9 hours.
-> With this observation we can deduce that as for now, this is the strongest correlation we were able to find thus far.
-> We will keep this graph in mind whilst making our recommendation, as well as explore it in the point of view of its effects per job title.
+> findings
+
+the findings of these graphs will shape our decision for the report.
+We can observe a very interesting phenomena when plotting age and absence hours per tenure, the graph shows how the absence hours per tenure increases referring to the age.Starting approximately the age 25, absenteeism increases around 0.9 hours.With this observation we can deduce that as for now, this is the strongest correlation we were able to find thus far.We will keep this graph in mind whilst making our recommendation, as well as explore it in the point of view of its effects per job title.
 
 ------------------------------------------------------------------------
 
-## 3. Predictive Statistics
+# 3. Predictive Statistics
 
 To begin with, we will try to build our model using AbsentHours to be our dependent variable.
 
